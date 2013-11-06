@@ -4,4 +4,3 @@
 
 django-storages==1.1.4
 boto==2.9.5
-uWSGI==1.9.18.2
