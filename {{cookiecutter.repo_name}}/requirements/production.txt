@@ -2,6 +2,7 @@
 #	production that isn't in development.
 -r base.txt
 
-django-storages==1.1.4
-boto==2.9.5
-uWSGI==1.9.18.2
+django-storages==1.1.8
+boto==2.18.0
+uWSGI>=1.9.20,<2.0.0
+pylibmc==1.2.3
