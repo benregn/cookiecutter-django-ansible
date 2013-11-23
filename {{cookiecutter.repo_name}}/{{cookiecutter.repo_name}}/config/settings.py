@@ -21,6 +21,7 @@ except ImportError:
     # TODO: Fix this where even if in Dev this class is called.
     pass
 
+import dj_database_url
 from configurations import Configuration, values
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -69,14 +70,15 @@ class Common(Configuration):
     ########## END APP CONFIGURATION
 
     ########## MIDDLEWARE CONFIGURATION
-    MIDDLEWARE_CLASSES = (
+    MIDDLEWARE_CLASSES = values.BackendsValue([
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
         'django.middleware.csrf.CsrfViewMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    )
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    ])
     ########## END MIDDLEWARE CONFIGURATION
 
     ########## DEBUG
@@ -84,7 +86,7 @@ class Common(Configuration):
     DEBUG = values.BooleanValue(True)
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
-    TEMPLATE_DEBUG = DEBUG
+    TEMPLATE_DEBUG = values.BooleanValue(DEBUG)
     ########## END DEBUG
 
     ########## SECRET CONFIGURATION
@@ -94,13 +96,6 @@ class Common(Configuration):
     SECRET_KEY = "CHANGEME!!!"
     ########## END SECRET CONFIGURATION
 
-    ########## FIXTURE CONFIGURATION
-    # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
-    FIXTURE_DIRS = (
-        join(BASE_DIR, 'fixtures'),
-    )
-    ########## END FIXTURE CONFIGURATION
-    
     ########## EMAIL CONFIGURATION
     EMAIL_BACKEND = values.Value('django.core.mail.backends.smtp.EmailBackend')
     ########## END EMAIL CONFIGURATION
@@ -117,7 +112,7 @@ class Common(Configuration):
 
     ########## DATABASE CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
-    DATABASES = values.DatabaseURLValue('postgres://localhost/{{cookiecutter.repo_name}}')
+    DATABASES = values.DatabaseURLValue('postgres://myuser@localhost/mydb')
     ########## END DATABASE CONFIGURATION
 
     ########## CACHING
@@ -153,7 +148,7 @@ class Common(Configuration):
 
     ########## TEMPLATE CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
-    TEMPLATE_CONTEXT_PROCESSORS = (
+    TEMPLATE_CONTEXT_PROCESSORS = values.BackendsValue([
         'django.contrib.auth.context_processors.auth',
         "allauth.account.context_processors.account",
         "allauth.socialaccount.context_processors.socialaccount",
@@ -165,17 +160,17 @@ class Common(Configuration):
         'django.contrib.messages.context_processors.messages',
         'django.core.context_processors.request',
         # Your stuff: custom template context processers go here
-    )
+    ])
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
     TEMPLATE_DIRS = (
         join(BASE_DIR, 'templates'),
     )
 
-    TEMPLATE_LOADERS = (
-            'django.template.loaders.filesystem.Loader',
-            'django.template.loaders.app_directories.Loader',
-        )
+    TEMPLATE_LOADERS = values.BackendsValue([
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    ])
 
     # See: http://django-crispy-forms.readthedocs.org/en/latest/install.html#template-packs
     CRISPY_TEMPLATE_PACK = 'bootstrap3'
@@ -183,7 +178,7 @@ class Common(Configuration):
 
     ########## STATIC FILE CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-    STATIC_ROOT = join(os.path.dirname(BASE_DIR), 'staticfiles')
+    STATIC_ROOT = values.PathValue(join(os.path.dirname(BASE_DIR), 'staticfiles'), checks_exists=False)
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
     STATIC_URL = '/static/'
@@ -194,15 +189,15 @@ class Common(Configuration):
     )
 
     # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
-    STATICFILES_FINDERS = (
+    STATICFILES_FINDERS = values.BackendsValue([
         'django.contrib.staticfiles.finders.FileSystemFinder',
         'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    )
+    ])
     ########## END STATIC FILE CONFIGURATION
 
     ########## MEDIA CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-    MEDIA_ROOT = join(BASE_DIR, 'media')
+    MEDIA_ROOT = values.PathValue(join(BASE_DIR, 'media'), checks_exists=False)
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
     MEDIA_URL = '/media/'
@@ -216,10 +211,10 @@ class Common(Configuration):
     ########## End URL Configuration
 
     ########## AUTHENTICATION CONFIGURATION
-    AUTHENTICATION_BACKENDS = (
+    AUTHENTICATION_BACKENDS = values.BackendsValue([
         "django.contrib.auth.backends.ModelBackend",
         "allauth.account.auth_backends.AuthenticationBackend",
-    )
+    ])
 
     # Some really nice defaults
     ACCOUNT_AUTHENTICATION_METHOD = "username"
@@ -301,6 +296,11 @@ class Local(Common):
 
 class Production(Common):
 
+    ########## DEBUG
+    DEBUG = bool(os.environ.get('DEBUG', False))
+    TEMPLATE_DEBUG = DEBUG
+    ########## END DEBUG
+
     ########## INSTALLED_APPS
     INSTALLED_APPS = Common.INSTALLED_APPS
     ########## END INSTALLED_APPS
@@ -329,8 +329,6 @@ class Production(Common):
     ALLOWED_HOSTS = ["*"]
     ########## END SITE CONFIGURATION
 
-    INSTALLED_APPS += ("gunicorn", )
-
     ########## STORAGE CONFIGURATION
     # See: http://django-storages.readthedocs.org/en/latest/index.html
     INSTALLED_APPS += (
@@ -344,6 +342,7 @@ class Production(Common):
     AWS_ACCESS_KEY_ID = values.SecretValue()
     AWS_SECRET_ACCESS_KEY = values.SecretValue()
     AWS_STORAGE_BUCKET_NAME = values.SecretValue()
+    AWS_PRELOAD_METADATA = values.BooleanValue(True)
     AWS_AUTO_CREATE_BUCKET = True
     AWS_QUERYSTRING_AUTH = False
 
@@ -355,7 +354,7 @@ class Production(Common):
     }
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
-    STATIC_URL = 'https://s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
+    STATIC_URL = values.URLValue('https://{0}.s3.amazonaws.com/static/'.format(AWS_STORAGE_BUCKET_NAME))
     ########## END STORAGE CONFIGURATION
 
     ########## EMAIL
