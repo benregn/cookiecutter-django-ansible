@@ -1,0 +1,69 @@
+---
+- name: add postgres signing key
+  sudo: True
+  apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
+  tags:
+    - postgres
+
+- name: add postgres apt repo
+  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main' state=present update_cache=yes
+  sudo: True
+  tags:
+    - postgres
+
+- name: install postgres packages
+  apt: pkg={{item}} state=installed update_cache=yes cache_valid_time={{six_hours}}
+  sudo: True
+  with_items: "{{postgres.packages}}"
+  tags:
+    - postgres
+
+# - name: add postgres user to admin group
+#   user: name=postgres groups=admin append=yes
+#   sudo: True
+#   tags:
+#     - postgres
+
+# - name: update postgres db configuration
+#   copy: src=postgresql.conf dest=/etc/postgresql/9.3/main/postgresql.conf
+#   sudo: True
+#   notify:
+#     - restart postgresql
+#   tags:
+#     - postgres
+
+- name: update postgres client configuration
+  copy: src=pg_hba.conf dest=/etc/postgresql/9.3/main/pg_hba.conf
+  sudo: True
+  notify:
+    - restart postgresql
+  tags:
+    - postgres
+
+- name: change listen_addresses to '*'
+  lineinfile: dest=/etc/postgresql/9.3/main/postgresql.conf regexp="^#listen_addresses" line="listen_addresses = '*'" state=present backup=yes
+  sudo: True
+  notify:
+    - restart postgresql
+  tags:
+    - postgres
+
+- name: install psycopg2 globally with pip
+  pip: name=psycopg2 state=present
+  sudo: True
+  tags:
+    - postgres
+
+- name: create a postgres user
+  postgresql_user: user={{ lookup('env', 'PSQL_USER') }} password={{ lookup('env', 'PSQL_PASSWORD') }}
+  sudo: True
+  sudo_user: postgres
+  tags:
+    - postgres
+
+- name: create database
+  postgresql_db: name={{ lookup('env', 'PSQL_DB_NAME') }} owner={{ lookup('env', 'PSQL_USER') }}
+  sudo: True
+  sudo_user: postgres
+  tags:
+    - postgres

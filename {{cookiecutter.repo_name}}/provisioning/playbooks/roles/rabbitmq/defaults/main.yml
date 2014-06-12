@@ -1,0 +1,3 @@
+rabbitmq_user: django
+rabbitmq_password: changeme
+rabbitmq_admin_password: changeme2

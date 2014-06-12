@@ -1,0 +1,5 @@
+---
+setup_pkg:
+    - memcached
+    - libmemcached-dev
+    - libevent-dev

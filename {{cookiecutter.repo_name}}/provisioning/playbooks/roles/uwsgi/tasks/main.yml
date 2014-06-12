@@ -1,0 +1,17 @@
+---
+- name: ensure uwsgi /etc/ dirs are present
+  file: path=/etc/uwsgi/vassals/ owner=www-data group=www-data state=directory
+  tags:
+    - uwsgi
+
+- name: add Django uwsgi ini file to vassals dir
+  template: src=uwsgi.j2 dest=/etc/uwsgi/vassals/{{project_name}}.ini owner=www-data group=www-data
+  tags:
+    - uwsgi
+
+- name: add {{project_name}}.conf file to supervisor
+  template: src=uwsgi_project_name.conf.j2 dest=/etc/supervisor/{{project_name}}.conf
+  notify:
+    - restart supervisord
+  tags:
+    - uwsgi

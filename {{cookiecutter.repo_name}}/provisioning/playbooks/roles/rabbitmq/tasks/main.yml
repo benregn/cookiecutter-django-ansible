@@ -1,0 +1,43 @@
+---
+- name: add rabbitmq signing key
+  sudo: True
+  apt_key: url=http://www.rabbitmq.com/rabbitmq-signing-key-public.asc state=present
+  tags:
+    - rabbitmq
+
+- name: add rabbitmq apt repo
+  apt_repository: repo='deb http://www.rabbitmq.com/debian/ testing main' state=present update_cache=yes
+  tags:
+    - rabbitmq
+
+- name: install rabbitmq-server packages
+  apt: pkg=rabbitmq-server state=installed update_cache=yes cache_valid_time={{six_hours}}
+  tags:
+    - rabbitmq
+
+- name: enable rabbitmq plugins
+  rabbitmq_plugin: names=rabbitmq_management,rabbitmq_tracing state=enabled
+  notify:
+  - restart rabbitmq
+  tags:
+    - rabbitmq
+
+- name: "ensure vhost /{{project_name}} is present"
+  rabbitmq_vhost: name=/{{project_name}} state=present node={{rabbit_node}}
+  tags:
+    - rabbitmq
+
+- name: add admin user
+  rabbitmq_user: user=admin password={{rabbitmq_admin_password}} tags=administrator vhost=/ configure_priv=.* write_priv=.* read_priv=.* state=present node={{rabbit_node}}
+  tags:
+    - rabbitmq
+
+- name: "add {{rabbitmq_user}} user"
+  rabbitmq_user: user={{rabbitmq_user}} password={{rabbitmq_password}} configure_priv=.* read_priv=.* write_priv=.* vhost=/{{project_name}} tags={{project_name}} state=present node={{rabbit_node}}
+  tags:
+    - rabbitmq
+
+- name: remove default guest user
+  rabbitmq_user: user=guest state=absent node={{rabbit_node}}
+  tags:
+    - rabbitmq

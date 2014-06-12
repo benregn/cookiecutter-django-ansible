@@ -1,0 +1,13 @@
+[program:celerybeat]
+command={{ virtualenv_dir }}/bin/python manage.py celerybeat --schedule=celerybeat-schedule --loglevel=INFO
+directory={{ code_root_dir }}
+user={{ django_user }}
+group=www-data
+numprocs=1
+stdout_logfile=/var/log/supervisor/celerybeat.log
+stderr_logfile=/var/log/supervisor/celerybeat_error.log
+autostart=true
+autorestart=true
+startsecs=5
+
+environment={% for item in env_vars %}{{ item.key }}="{{ item.value }}"{% if not loop.last %},{% endif %}{% endfor %}

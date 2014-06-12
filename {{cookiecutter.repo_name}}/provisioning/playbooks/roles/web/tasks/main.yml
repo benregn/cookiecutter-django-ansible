@@ -1,0 +1,53 @@
+---
+- name: add deployment user
+  user: name={{django_user}} password={{django_pass}} shell=/bin/bash uid=1002 groups=www-data append=yes createhome=yes state=present
+  tags:
+    - setup
+
+- name: add deployment user to sudoers
+  lineinfile: dest=/etc/sudoers regexp="{{django_user}} ALL" line="{{django_user}} ALL=(ALL) ALL" state=present
+  tags:
+    - setup
+
+- name: "ensure {{django_user}}/.ssh/ dir exists"
+  file: path=/home/{{django_user}}/.ssh/ state=directory owner={{django_user}} group={{django_user}} mode=755
+  tags:
+    - setup
+
+- name: "copy public ssh key over for {{django_user}}"
+  copy: src=../keys/key.pub dest=/home/{{django_user}}/.ssh/id_rsa.pub mode=644
+  tags:
+    - setup
+
+- name: "copy private ssh key over for {{django_user}}"
+  copy: src=../keys/key dest=/home/{{django_user}}/.ssh/id_rsa mode=644
+  tags:
+    - setup
+
+- name: "add ssh key for: {{django_user}}"
+  authorized_key: user={{ django_user }} key="{{ item }}"
+  with_file:
+    - ../../../../keys/key.pub
+  tags:
+    - setup
+
+- name: write .bash_aliases
+  template: src=bash_aliases dest=/home/{{django_user}}/.bash_aliases owner={{django_user}} group=www-data
+  tags:
+    - setup
+
+- name: write .bashrc
+  copy: src=bashrc dest=/home/{{django_user}}/.bashrc owner={{django_user}} group=www-data
+  tags:
+    - setup
+
+- name: install web packages
+  apt: pkg={{item}} state=installed update_cache=yes cache_valid_time={{six_hours}}
+  with_items: "{{setup_pkg}}"
+  tags:
+    - setup
+
+- name: "create /var/log/{{project_name}} directory"
+  file: path=/var/log/{{project_name}} owner={{django_user}} group=www-data state=directory mode=775
+  tags:
+    - setup

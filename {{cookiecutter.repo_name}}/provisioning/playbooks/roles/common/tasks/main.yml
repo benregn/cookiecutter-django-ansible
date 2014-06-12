@@ -1,0 +1,137 @@
+---
+- name: update APT package cache and aptitude safe-upgrade
+  apt: update_cache=yes upgrade=yes cache_valid_time={{six_hours}}
+  tags:
+    - setup
+
+- name: generate locale
+  shell: locale-gen {{common.locale}}
+  tags:
+    - setup
+
+- name: update locale
+  shell: update-locale LANG={{common.locale}}
+  tags:
+    - setup
+
+- name: install common packages
+  apt: pkg={{item}} state=installed update_cache=yes cache_valid_time={{six_hours}}
+  with_items: "{{common.pkg}}"
+  tags:
+    - setup
+
+# - name: add custom ssh key for vagrant
+#   authorized_key: user=vagrant key="{{ lookup('file', '~/.ssh/v.pub') }}"
+#   tags:
+#     - setup
+
+# - name: remove default insecure ssh key
+#   lineinfile: dest=/home/vagrant/.ssh/authorized_keys regexp="vagrant insecure public key" state=absent
+#   tags:
+#     - setup
+
+- name: remove sudo group rights
+  lineinfile: dest=/etc/sudoers regexp="^%sudo" state=absent
+  tags:
+    - setup
+
+- name: update ssh parameters
+  lineinfile:
+    dest=/etc/ssh/sshd_config
+    state=present
+    regexp=^{{ item.key }}
+    line="{{ item.key }} {{ item.value }}"
+    insertafter=EOF
+  with_items:
+    - { key: 'PermitRootLogin', value: 'no' }
+    - { key: 'PasswordAuthentication', value: 'no' }
+    - { key: 'LoginGraceTime', value: '20' }
+    - { key: 'X11Forwarding', value: 'no' }
+    - { key: 'ClientAliveInterval', value: '30' }
+    - { key: 'ClientAliveCountMax', value: '1000' }
+  notify:
+    - restart ssh
+
+- name: add custom ssh key for root
+  authorized_key: user=root key="{{ item }}"
+  with_file:
+    - ../../../../keys/key.pub
+  tags:
+    - setup
+
+- name: adjust APT update intervals
+  copy: src=apt_periodic dest=/etc/apt/apt.conf.d/10periodic
+  tags:
+    - setup
+
+- name: "make sure unattended-upgrades only installs from {{common.ubuntu_release}}-security"
+  copy: src=50unattended-upgrades dest=/etc/apt/apt.conf.d/50unattended-upgrades
+  tags:
+    - setup
+
+- name: generate debconf selections so that Postfix can configure itself non-interactively
+  template: src=postfix_selections  dest=/tmp/postfix_selections
+  tags:
+    - setup
+
+- name: set up Postfix to relay mail
+  command: debconf-set-selections /tmp/postfix_selections
+  tags:
+    - setup
+
+- name: "make logwatch mail {{common.logwatch_email}} daily"
+  lineinfile: dest=/etc/cron.daily/00logwatch regexp="^/usr/sbin/logwatch" line="/usr/sbin/logwatch --output mail --mailto {{common.logwatch_email}} --detail high" state=present create=yes
+  tags:
+    - setup
+
+- name: install python
+  apt: pkg={{item}} state=installed update_cache=yes cache_valid_time={{six_hours}}
+  with_items:
+    - python-dev
+    - python-setuptools
+  tags:
+    - python
+
+- name: install pip
+  easy_install: name=pip
+  tags:
+    - python
+
+- name: install supervisor
+  pip: name=supervisor state=latest
+  tags:
+    - setup
+
+- name: add supervisord.conf
+  copy: src=supervisord.conf dest={{supervisor.conf_location}}
+  notify:
+    - restart supervisord
+  tags:
+    - setup
+
+- name: create /etc/supervisor directory
+  file: path=/etc/supervisor state=directory
+  tags:
+    - setup
+
+- name: create /var/log/supervisor directory
+  file: path=/var/log/supervisor state=directory
+  tags:
+    - setup
+
+- name: add supervisord init.d script
+  template: src=supervisord dest=/etc/init.d/supervisord owner=root group=root mode='755' force=yes
+  notify: restart supervisord
+  tags:
+    - setup
+
+- name: start supervisord on boot
+  command: update-rc.d supervisord defaults
+  notify: restart supervisord
+  tags:
+    - setup
+
+- name: ensure supervisor is started
+  service: name=supervisord state=started
+  tags:
+    - setup

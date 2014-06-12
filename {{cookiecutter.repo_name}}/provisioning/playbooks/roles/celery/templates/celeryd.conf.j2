@@ -1,0 +1,17 @@
+[program:celeryd]
+command={{ virtualenv_dir }}/bin/python manage.py celeryd --loglevel=INFO
+directory={{ code_root_dir }}
+user={{ django_user }}
+group=www-data
+numprocs=1
+stdout_logfile=/var/log/supervisor/celeryd.log
+stderr_logfile=/var/log/supervisor/celeryd_error.log
+autostart=true
+autorestart=true
+startsecs=5
+
+environment={% for item in env_vars %}{{ item.key }}="{{ item.value }}"{% if not loop.last %},{% endif %}{% endfor %}
+
+; Need to wait for currently executing tasks to finish at shutdown.
+; Increase this if you have very long running tasks.
+stopwaitsecs = 600

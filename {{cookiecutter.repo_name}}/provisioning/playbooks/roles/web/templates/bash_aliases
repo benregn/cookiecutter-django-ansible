@@ -1,0 +1,33 @@
+export PIP_DOWNLOAD_CACHE=/home/{{django_user}}/.pip-download-cache/
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
+export PIP_VIRTUALENV_BASE=$WORKON_HOME
+export PIP_RESPECT_VIRTUALENV=true
+export DATABASE_URL="postgres://{{ lookup('env', 'PSQL_USER') }}:{{ lookup('env', 'PSQL_PASSWORD') }}@localhost:5432/{{ lookup('env', 'PSQL_DB_NAME') }}"
+if [[ -r /usr/local/bin/virtualenvwrapper.sh ]]; then
+    source /usr/local/bin/virtualenvwrapper.sh
+else
+    echo "WARNING: Can't find virtualenvwrapper.sh"
+fi
+
+
+export HISTCONTROL=erasedups
+export HISTSIZE=5000
+shopt -s histappend
+
+
+## Tell ls to be colourful
+export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
+
+## Tell grep to highlight matches
+export GREP_OPTIONS='--color=auto'
+
+
+# Set environment language
+export LANG=en_US.utf8
+export LC_ALL=en_US.UTF-8
+export LC_LANG=en_US.UTF-8
+
+{% for item in env_vars %}
+export {{ item.key }}={{ item.value }}
+{% endfor %}

@@ -1,0 +1,6 @@
+---
+fqdn: example.com
+settings_module: prod
+rabbit_node: rabbit@localhost
+env_vars:
+  - {key: 'ENV_VAR_NAME', value: 'ENV_VAR_VALUE'}

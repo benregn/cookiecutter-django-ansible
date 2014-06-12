@@ -1,0 +1,9 @@
+Host *.github.com
+Hostname github.com
+
+Host *.gist.github.com
+Hostname gist.github.com
+
+Host github.com gist.github.com *.github.com *.gist.github.com
+User git
+StrictHostKeyChecking no

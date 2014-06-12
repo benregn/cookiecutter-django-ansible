@@ -1,0 +1,37 @@
+[uwsgi]
+# master
+master = true
+
+{% for item in env_vars %}
+env = {{ item.key }}={{ item.value }}
+{% endfor %}
+
+# maximum number of processes
+processes = 4
+
+# Kill unresponsive process after X sec
+harakiri = 30
+
+# the socket (use the full path to be safe)
+socket = /tmp/{{project_name}}.sock
+
+# with appropriate permissions
+chmod-socket = 644
+uid = www-data
+gid = www-data
+chown-socket = www-data
+
+# the base directory
+chdir = {{code_root_dir}}
+
+# Django's wsgi file
+module = {{wsgi_path}}
+callable = application
+
+virtualenv = {{virtualenv_dir}}
+
+# exit if no app can be loaded
+need-app = true
+
+# clear environment on exit
+vacuum = true

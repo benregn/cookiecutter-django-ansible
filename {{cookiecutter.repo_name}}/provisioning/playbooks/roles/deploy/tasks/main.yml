@@ -1,0 +1,63 @@
+---
+- name: git config name
+  shell: git config --global user.name "{{ git_name }}" executable=/bin/bash
+  tags:
+    - deploy
+
+- name: git config email
+  shell: git config --global user.email {{ git_email }} executable=/bin/bash
+  tags:
+    - deploy
+
+- name: copy /.ssh/config
+  copy: src=ssh_config dest=/home/{{ django_user }}/.ssh/config
+  tags:
+    - deploy
+
+- name: pull git
+  git: repo={{ git_repo }} dest={{ code_root_dir }}
+  tags:
+    - deploy
+
+- name: "ensure ~/.virtualenvs/{{project_name}} dir is created"
+  file: path=/home/{{ django_user }}/.virtualenvs/{{ project_name }} state=directory
+  tags:
+    - deploy
+
+- name: "ensure correct permission in /var/log/{{project_name}}"
+  command: "{{ item }}"
+  with_items:
+    - "chown --recursive {{django_user}}:www-data /var/log/{{ project_name }}"
+    - "chmod --recursive 775 /var/log/{{ project_name }}"
+  tags:
+    - deploy
+
+- name: install pip requirements
+  pip: >
+    virtualenv=/home/{{ django_user }}/.virtualenvs/{{ project_name }}
+    requirements={{ code_root_dir }}/{{ reqs_dir }}/{{ settings_module }}.txt
+  tags:
+    - deploy
+
+- name: run django manage commands
+  django_manage: >
+    app_path={{ code_root_dir }} command={{ item }} settings=remindr.settings.prod
+    virtualenv=/home/{{ django_user }}/.virtualenvs/{{ project_name }}
+  with_items:
+    - syncdb
+    - migrate
+    - collectstatic
+  tags:
+    - deploy
+  environment:
+    ENV_VAR_NAME: ENV_VALUE
+
+- name: "restart supervisor managed processes"
+  supervisorctl: name={{ item }} state=restarted
+  with_items:
+    - "{{ project_name }}"
+    - celerybeat
+    - celeryd
+  sudo: True
+  tags:
+    - deploy

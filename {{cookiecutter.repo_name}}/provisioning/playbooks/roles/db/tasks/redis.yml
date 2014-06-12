@@ -1,0 +1,62 @@
+---
+- name: "install Redis server: {{redis.package}}"
+  apt: pkg={{redis.package}} state=installed update_cache=yes cache_valid_time={{six_hours}}
+  tags:
+    - redis
+
+- name: bind Redis server to all interfaces
+  lineinfile: dest=/etc/redis/redis.conf state=present regexp="^#?bind" line="#bind 127.0.0.1"
+  notify:
+    - restart Redis
+  tags:
+    - redis
+
+- name: ensure Redis server is running
+  service: name={{redis.package}} state=started
+  tags:
+    - redis
+
+- name: install Redmon dependencies
+  apt: pkg={{item}} state=installed update_cache=yes cache_valid_time={{six_hours}}
+  with_items: "{{redmon.dependencies}}"
+  tags:
+    - redis
+    - redmon
+
+- name: set Ruby 1.9.1 (ABI version) as default
+  command: update-alternatives --set ruby /usr/bin/ruby1.9.1
+  tags:
+    - redis
+    - redmon
+
+- name: set gem to corresponding Ruby version
+  command: update-alternatives --set gem /usr/bin/gem1.9.1
+  tags:
+    - redis
+    - redmon
+
+- name: install gems requered for Redmon
+  gem: name={{item}} state=present
+  with_items: "{{redmon.gems}}"
+  sudo: False
+  tags:
+    - redis
+    - redmon
+
+- name: "link {{redmon.service}} to /usr/local/bin"
+  file: src=/home/vagrant/.gem/ruby/1.9.1/bin/redmon dest=/usr/local/bin/redmon state=link
+  tags:
+    - redis
+    - redmon
+
+# - name: Redmon supervisord conf file
+#   template: src=redmon.j2 dest=/etc/supervisor/{{redmon.service}}.conf  owner=root group=root mode='755'
+#   tags:
+#     - redis
+#     - redmon
+
+# - name: ensure Redmon server is running
+#   supervisorctl: name={{redmon.service}} state=started
+#   tags:
+#     - redis
+#     - redmon

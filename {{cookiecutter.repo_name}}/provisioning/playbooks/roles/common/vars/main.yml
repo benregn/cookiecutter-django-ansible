@@ -1,0 +1,18 @@
+---
+common:
+  locale: en_US.UTF-8
+  ubuntu_release: precise
+  logwatch_email: ops@releasly.com
+  pkg:
+    - python-software-properties
+    - build-essential
+    - git-core
+    - logwatch
+    - postfix
+    - unattended-upgrades
+    - fail2ban
+postfix:
+  root_address: ops@releasly.com
+  mailname: releasly.com
+supervisor:
+  conf_location: /etc/supervisord.conf

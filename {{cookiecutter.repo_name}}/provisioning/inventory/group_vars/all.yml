@@ -1,0 +1,18 @@
+---
+six_hours: 21600
+project_name: project_name
+git_repo: git@github.com:username/repo-name.git
+git_name: John
+git_email: example@example.com
+
+django_user: django
+# crypted password, generated on a Linux box using: echo 'import crypt,getpass; print crypt.crypt(getpass.getpass(), "$6$AC3bdCF7!$")' | python -
+# default pass: django
+django_pass: $6$AC3bdCF7!$fDkCcrTpiS6M/PMxR38L5vdZn9HjcsFI.Gk12nA5ABus0yvK0SZSIFFidTwTpBPyWHtVZ6v6XpCj4TdlQSinz0
+
+code_root_dir: /var/www/django/{{project_name}}
+virtualenv_dir: /home/{{django_user}}/.virtualenvs/{{project_name}}
+# relative to code_root_dir
+reqs_dir: reqs
+# dotted path to your wsgi.py, relative to code_root_dir
+wsgi_path: wsgi

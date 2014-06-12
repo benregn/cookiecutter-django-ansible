@@ -1,0 +1,14 @@
+---
+- name: add celeryd.conf file to supervisor
+  template: src=celeryd.conf.j2 dest=/etc/supervisor/celeryd.conf
+  notify:
+    - restart supervisord
+  tags:
+    - celery
+
+- name: add celerybeat.conf file to supervisor
+  template: src=celerybeat.conf.j2 dest=/etc/supervisor/celerybeat.conf
+  notify:
+    - restart supervisord
+  tags:
+    - celery

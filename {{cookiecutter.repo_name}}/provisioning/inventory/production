@@ -1,0 +1,8 @@
+[digital_ocean]
+177.77.77.10
+
+[webservers:children]
+digital_ocean
+
+[dbservers:children]
+digital_ocean
