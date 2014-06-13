@@ -1,15 +1,10 @@
 ---
 common_locale: en_US.UTF-8
 common_ubuntu_release: precise
-common_logwatch_email: {{cookiecutter.email}}
 common_pkg:
   - python-software-properties
   - build-essential
   - git-core
-  - logwatch
-  - postfix
   - unattended-upgrades
   - fail2ban
-postfix_root_address: {{cookiecutter.email}}
-postfix_mailname: {{cookiecutter.domain_name}}
 supervisor_conf_location: /etc/supervisord.conf
