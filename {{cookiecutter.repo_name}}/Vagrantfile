@@ -1,22 +1,29 @@
-$setup = <<SCRIPT
-    DEBIAN_FRONTEND=noninteractive apt-get update
-SCRIPT
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
 
-$dependencies = <<SCRIPT
-    DEBIAN_FRONTEND=noninteractive apt-get install -y postgresql libpq-dev
-    DEBIAN_FRONTEND=noninteractive apt-get install -y python-dev libjpeg-dev zlib1g-dev
-    DEBIAN_FRONTEND=noninteractive apt-get install -y python-virtualenv virtualenvwrapper
-SCRIPT
+VAGRANTFILE_API_VERSION = "2"
 
-Vagrant.configure('2') do |config|
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # Using Vagrant Cloud
+  # https://vagrantcloud.com/ubuntu/trusty64
+  config.vm.box = "ubuntu/trusty64"
 
-    config.vm.box = 'precise64'
-    config.vm.box_url = "http://files.vagrantup.com/" + config.vm.box + ".box"
+  # config.ssh.forward_agent = true
+  config.vm.network :forwarded_port, guest: 80, host: 8080
+  config.vm.network :forwarded_port, guest: 4567, host: 4567, id: "redmon"
+  config.vm.network :forwarded_port, guest: 8000, host: 8000, id: "django"
+  config.vm.network :forwarded_port, guest: 15672, host: 15672, id: "rabbitmq-management"
 
-    config.ssh.forward_agent = true
-    # Forward the dev server port
-    config.vm.network :forwarded_port, host: 8000, guest: 8000
+  config.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
+  # Uncomment to sync project files to Vagrant
+  # config.vm.synced_folder "{{cookiecutter.project_name}}", "/var/www/django/{{cookiecutter.project_name}}/", id: "django-root", group: "www-data", disabled: false, :mount_options => ["uid=1002"]
 
-    config.vm.provision "shell", inline: $setup
-    config.vm.provision "shell", inline: $dependencies
+  config.vm.provider :virtualbox do |vb|
+    vb.customize ["modifyvm", :id, "--memory", "512"]
+  end
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "provisioning/playbooks/site.yml"
+    ansible.inventory_path = "provisioning/inventory/local"
+  end
 end
