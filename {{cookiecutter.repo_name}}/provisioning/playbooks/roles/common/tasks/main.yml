@@ -4,16 +4,6 @@
   tags:
     - setup
 
-- name: generate locale
-  shell: locale-gen {{common_locale}}
-  tags:
-    - setup
-
-- name: update locale
-  shell: update-locale LANG={{common_locale}}
-  tags:
-    - setup
-
 - name: install common packages
   apt: pkg={{item}} state=installed update_cache=yes cache_valid_time={{six_hours}}
   with_items: "{{common_pkg}}"
