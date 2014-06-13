@@ -10,6 +10,11 @@
   tags:
     - python
 
+- name: install pip
+  easy_install: name=pip
+  tags:
+    - python
+
 - name: install various libraries with pip
   pip: name={{item}} state=latest
   with_items: "{{python_pip_global_packages}}"

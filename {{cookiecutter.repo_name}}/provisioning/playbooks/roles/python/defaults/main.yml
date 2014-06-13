@@ -1,5 +1,7 @@
 ---
 python_dependencies:
+    - python-dev
+    - python-setuptools
     ### Pillow prereqs
     - libtiff4-dev
     - libjpeg-dev

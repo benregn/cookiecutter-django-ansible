@@ -1,6 +1,3 @@
 ---
 - name: restart ssh
   service: name=ssh state=restarted
-
-- name: restart supervisord
-  service: name=supervisord state=restarted
