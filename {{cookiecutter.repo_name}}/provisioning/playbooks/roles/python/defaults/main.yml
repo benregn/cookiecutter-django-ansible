@@ -2,7 +2,7 @@
 python_dependencies:
     ### Pillow prereqs
     - libtiff4-dev
-    - libjpeg8-dev
+    - libjpeg-dev
     - zlib1g-dev
     - libfreetype6-dev
     - liblcms1-dev

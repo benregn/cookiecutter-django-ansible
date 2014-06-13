@@ -1,9 +1,9 @@
 ---
 six_hours: 21600
-project_name: project_name
-git_repo: git@github.com:username/repo-name.git
-git_name: John
-git_email: example@example.com
+project_name: {{cookiecutter.project_name}}
+git_repo: git@github.com:username/{{cookiecutter.repo_name}}.git
+git_name: {{cookiecutter.author_name}}
+git_email: {{cookiecutter.email}}
 
 django_user: django
 # crypted password, generated on a Linux box using: echo 'import crypt,getpass; print crypt.crypt(getpass.getpass(), "$6$AC3bdCF7!$")' | python -

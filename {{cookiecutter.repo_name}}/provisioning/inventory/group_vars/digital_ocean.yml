@@ -1,5 +1,5 @@
 ---
-fqdn: example.com
+fqdn: {{cookiecutter.domain_name}}
 settings_module: prod
 rabbit_node: rabbit@localhost
 env_vars:

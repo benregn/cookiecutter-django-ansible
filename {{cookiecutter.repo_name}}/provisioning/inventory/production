@@ -1,5 +1,5 @@
 [digital_ocean]
-177.77.77.10
+{{cookiecutter.domain_name}}
 
 [webservers:children]
 digital_ocean

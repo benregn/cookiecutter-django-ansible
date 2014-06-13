@@ -2,7 +2,7 @@
 common:
   locale: en_US.UTF-8
   ubuntu_release: precise
-  logwatch_email: ops@releasly.com
+  logwatch_email: {{cookiecutter.email}}
   pkg:
     - python-software-properties
     - build-essential
@@ -12,7 +12,7 @@ common:
     - unattended-upgrades
     - fail2ban
 postfix:
-  root_address: ops@releasly.com
-  mailname: releasly.com
+  root_address: {{cookiecutter.email}}
+  mailname: {{cookiecutter.domain_name}}
 supervisor:
   conf_location: /etc/supervisord.conf
