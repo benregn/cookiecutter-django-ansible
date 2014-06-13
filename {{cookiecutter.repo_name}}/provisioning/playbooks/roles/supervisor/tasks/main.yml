@@ -5,7 +5,7 @@
     - supervisor
 
 - name: add supervisord.conf
-  copy: src=supervisord.conf dest={{supervisor.conf_location}}
+  copy: src=supervisord.conf dest={{supervisor_conf_location}}
   notify:
     - restart supervisord
   tags:
