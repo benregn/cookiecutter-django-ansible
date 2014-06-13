@@ -22,7 +22,7 @@ module.exports = function (grunt) {
       images: this.app + '/static/images',
       js: this.app + '/static/js',
       manageScript: this.app + '/manage.py'
-    }
+    };
   };
 
   grunt.initConfig({
