@@ -13,6 +13,7 @@ django_pass: $6$AC3bdCF7!$fDkCcrTpiS6M/PMxR38L5vdZn9HjcsFI.Gk12nA5ABus0yvK0SZSIF
 code_root_dir: /var/www/django/{{project_name}}
 virtualenv_dir: /home/{{django_user}}/.virtualenvs/{{project_name}}
 # relative to code_root_dir
-reqs_dir: reqs
+reqs_dir: {{cookiecutter.repo_name}}/requirements
 # dotted path to your wsgi.py, relative to code_root_dir
-wsgi_path: wsgi
+wsgi_path: {{cookiecutter.repo_name}}.config.wsgi
+settings_module: {{cookiecutter.repo_name}}.config.settings

@@ -1,6 +1,6 @@
 ---
 fqdn: {{cookiecutter.domain_name}}
-settings_module: prod
 rabbit_node: rabbit@localhost
 env_vars:
-  - {key: 'ENV_VAR_NAME', value: 'ENV_VAR_VALUE'}
+  - {key: 'DJANGO_SETTINGS_MODULE', value: 'config.settings'}
+  - {key: 'DJANGO_CONFIGURATION', value: 'Production'}
