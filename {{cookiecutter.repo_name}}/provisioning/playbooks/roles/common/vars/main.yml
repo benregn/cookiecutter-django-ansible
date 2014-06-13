@@ -1,6 +1,5 @@
 ---
-common_locale: en_US.UTF-8
-common_ubuntu_release: precise
+common_ubuntu_release: trusty
 common_pkg:
   - python-software-properties
   - build-essential
