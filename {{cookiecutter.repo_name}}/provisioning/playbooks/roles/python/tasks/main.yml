@@ -16,7 +16,7 @@
     - python
 
 - name: install various libraries with pip
-  pip: name={{item}} state=latest
+  pip: name={{item.name}} version={{item.version}} state=present
   with_items: python_pip_global_packages
   tags:
     - python
