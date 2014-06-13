@@ -1,6 +1,6 @@
 ---
-- name: "install Redis server: {{redis.package}}"
-  apt: pkg={{redis.package}} state=installed update_cache=yes cache_valid_time={{six_hours}}
+- name: "install Redis server: {{redis_package}}"
+  apt: pkg={{redis_package}} state=installed update_cache=yes cache_valid_time={{six_hours}}
   tags:
     - redis
 
@@ -12,13 +12,13 @@
     - redis
 
 - name: ensure Redis server is running
-  service: name={{redis.package}} state=started
+  service: name={{redis_package}} state=started
   tags:
     - redis
 
 - name: install Redmon dependencies
   apt: pkg={{item}} state=installed update_cache=yes cache_valid_time={{six_hours}}
-  with_items: "{{redmon.dependencies}}"
+  with_items: "{{redmon_dependencies}}"
   tags:
     - redis
     - redmon
@@ -37,26 +37,26 @@
 
 - name: install gems requered for Redmon
   gem: name={{item}} state=present
-  with_items: "{{redmon.gems}}"
+  with_items: "{{redmon_gems}}"
   sudo: False
   tags:
     - redis
     - redmon
 
-- name: "link {{redmon.service}} to /usr/local/bin"
+- name: "link {{redmon_service}} to /usr/local/bin"
   file: src=/home/vagrant/.gem/ruby/1.9.1/bin/redmon dest=/usr/local/bin/redmon state=link
   tags:
     - redis
     - redmon
 
 # - name: Redmon supervisord conf file
-#   template: src=redmon.j2 dest=/etc/supervisor/{{redmon.service}}.conf  owner=root group=root mode='755'
+#   template: src=redmon.j2 dest=/etc/supervisor/{{redmon_service}}.conf  owner=root group=root mode='755'
 #   tags:
 #     - redis
 #     - redmon
 
 # - name: ensure Redmon server is running
-#   supervisorctl: name={{redmon.service}} state=started
+#   supervisorctl: name={{redmon_service}} state=started
 #   tags:
 #     - redis
 #     - redmon

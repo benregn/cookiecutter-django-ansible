@@ -1,7 +1,0 @@
-[program:{{redmon.service}}]
-command=/usr/local/bin/{{redmon.service}} ; the program (relative uses PATH, can take args)
-process_name=%(program_name)s ; process_name expr (default %(program_name)s)
-autostart=true                ; start at supervisord start (default: true)
-autorestart=true              ; retstart at unexpected quit (default: true)
-stdout_logfile=/var/log/supervisor/{{redmon.service}}_stdout.log
-stderr_logfile=/var/log/supervisor/{{redmon.service}}_stderr.log

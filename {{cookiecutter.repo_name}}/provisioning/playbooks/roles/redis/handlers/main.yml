@@ -1,0 +1,10 @@
+---
+- name: restart Redis
+  service: name={{redis_service}} state=restarted
+  tags:
+    - redis
+
+- name: restart Redmon
+  service: name={{redmon_service}} state=restarted
+  tags:
+    - redis
