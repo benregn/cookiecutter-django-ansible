@@ -1,6 +1,5 @@
 ---
-postgres:
-  packages:
+postgres_packages:
     - libpq-dev
     - postgresql-9.3
     - postgresql-contrib-9.3
