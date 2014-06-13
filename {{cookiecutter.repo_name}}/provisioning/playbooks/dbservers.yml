@@ -3,5 +3,5 @@
   gather_facts: no
   sudo: True
   roles:
-    - common
-    - db
+    - { role: common }
+    - { role: postgres }

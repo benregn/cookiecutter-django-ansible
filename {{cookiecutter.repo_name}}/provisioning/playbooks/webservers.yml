@@ -3,5 +3,8 @@
   gather_facts: yes
   sudo: True
   roles:
-    - common
-    - web
+    - { role: common }
+    - { role: python }
+    - { role: supervisor }
+    - { role: uwsgi }
+    - { role: nginx }
