@@ -14,7 +14,7 @@
 - name: install postgres packages
   apt: pkg={{item}} state=installed update_cache=yes cache_valid_time={{six_hours}}
   sudo: True
-  with_items: "{{postgres.packages}}"
+  with_items: postgres.packages
   tags:
     - postgres
 

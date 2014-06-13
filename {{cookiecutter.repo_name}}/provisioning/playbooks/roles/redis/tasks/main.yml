@@ -18,7 +18,7 @@
 
 - name: install Redmon dependencies
   apt: pkg={{item}} state=installed update_cache=yes cache_valid_time={{six_hours}}
-  with_items: "{{redmon_dependencies}}"
+  with_items: redmon_dependencies
   tags:
     - redis
     - redmon
@@ -37,7 +37,7 @@
 
 - name: install gems requered for Redmon
   gem: name={{item}} state=present
-  with_items: "{{redmon_gems}}"
+  with_items: redmon_gems
   sudo: False
   tags:
     - redis

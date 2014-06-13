@@ -43,7 +43,7 @@
 
 - name: install web packages
   apt: pkg={{item}} state=installed update_cache=yes cache_valid_time={{six_hours}}
-  with_items: "{{setup_pkg}}"
+  with_items: setup_pkg
   tags:
     - setup
 
