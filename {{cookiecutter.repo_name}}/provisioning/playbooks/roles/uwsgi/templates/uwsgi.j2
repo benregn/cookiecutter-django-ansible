@@ -1,4 +1,4 @@
-[uwsgi]
+{% raw %}[uwsgi]
 # master
 master = true
 
@@ -34,4 +34,4 @@ virtualenv = {{virtualenv_dir}}
 need-app = true
 
 # clear environment on exit
-vacuum = true
+vacuum = true{% endraw %}

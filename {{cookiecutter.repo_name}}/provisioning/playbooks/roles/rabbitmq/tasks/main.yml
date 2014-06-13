@@ -1,4 +1,4 @@
----
+{% raw %}---
 - name: add rabbitmq signing key
   sudo: True
   apt_key: url=http://www.rabbitmq.com/rabbitmq-signing-key-public.asc state=present
@@ -41,3 +41,4 @@
   rabbitmq_user: user=guest state=absent node={{rabbit_node}}
   tags:
     - rabbitmq
+{% endraw %}

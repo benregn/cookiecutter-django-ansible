@@ -1,4 +1,4 @@
----
+{% raw %}---
 - name: add nginx ppa
   apt_repository: repo=ppa:nginx/stable state=present update_cache=yes
   tags:
@@ -34,4 +34,4 @@
   notify:
     - restart nginx
   tags:
-    - nginx
+    - nginx{% endraw %}

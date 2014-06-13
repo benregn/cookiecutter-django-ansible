@@ -1,3 +1,4 @@
+{% raw %}
 comment out Vagrant sync_folder before running provision, then uncomment again
 
 
@@ -29,3 +30,4 @@ note the two "/" before project_name
 no ' (single quotes in PSQL_* env vars)
 
 
+{% endraw %}

@@ -1,4 +1,4 @@
-export PIP_DOWNLOAD_CACHE=/home/{{django_user}}/.pip-download-cache/
+{% raw %}export PIP_DOWNLOAD_CACHE=/home/{{django_user}}/.pip-download-cache/
 export WORKON_HOME=$HOME/.virtualenvs
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
 export PIP_VIRTUALENV_BASE=$WORKON_HOME
@@ -30,4 +30,4 @@ export LC_LANG=en_US.UTF-8
 
 {% for item in env_vars %}
 export {{ item.key }}={{ item.value }}
-{% endfor %}
+{% endfor %}{% endraw %}

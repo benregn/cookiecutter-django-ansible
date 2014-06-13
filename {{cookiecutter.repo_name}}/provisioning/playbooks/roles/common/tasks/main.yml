@@ -1,4 +1,4 @@
----
+{% raw %}---
 - name: update APT package cache and aptitude safe-upgrade
   apt: update_cache=yes upgrade=yes cache_valid_time={{six_hours}}
   tags:
@@ -134,4 +134,4 @@
 - name: ensure supervisor is started
   service: name=supervisord state=started
   tags:
-    - setup
+    - setup{% endraw %}

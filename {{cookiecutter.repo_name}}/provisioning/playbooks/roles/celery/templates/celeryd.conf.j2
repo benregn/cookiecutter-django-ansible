@@ -1,4 +1,4 @@
-[program:celeryd]
+{% raw %}[program:celeryd]
 command={{ virtualenv_dir }}/bin/python manage.py celeryd --loglevel=INFO
 directory={{ code_root_dir }}
 user={{ django_user }}
@@ -14,4 +14,4 @@ environment={% for item in env_vars %}{{ item.key }}="{{ item.value }}"{% if not
 
 ; Need to wait for currently executing tasks to finish at shutdown.
 ; Increase this if you have very long running tasks.
-stopwaitsecs = 600
+stopwaitsecs = 600{% endraw %}

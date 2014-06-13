@@ -1,4 +1,4 @@
----
+{% raw %}---
 - name: git config name
   shell: git config --global user.name "{{ git_name }}" executable=/bin/bash
   tags:
@@ -61,4 +61,4 @@
     - celeryd
   sudo: True
   tags:
-    - deploy
+    - deploy{% endraw %}

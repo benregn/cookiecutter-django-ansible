@@ -1,4 +1,4 @@
-#! /bin/sh
+{% raw %}#! /bin/sh
 ### BEGIN INIT INFO
 # Provides:          supervisord
 # Required-Start:    $remote_fs
@@ -22,7 +22,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 DESC="Start/stop/restart supervisord"
 NAME=supervisord
 DAEMON=/usr/local/bin/$NAME
-DAEMON_ARGS="-c {{supervisor.conf_location}}"
+DAEMON_ARGS="-c {{supervisor_conf_location}}"
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
 
@@ -152,4 +152,4 @@ case "$1" in
     ;;
 esac
 
-:
+:{% endraw %}

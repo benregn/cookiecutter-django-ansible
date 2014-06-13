@@ -1,8 +1,8 @@
-[program:{{project_name}}]
+{% raw %}[program:{{project_name}}]
 command=/usr/local/bin/uwsgi --ini /etc/uwsgi/vassals/{{project_name}}.ini
 autostart=true
 autorestart=true
 stdout_logfile=/var/log/supervisor/{{project_name}}_uwsgi_stdout.log
 stderr_logfile=/var/log/supervisor/{{project_name}}_uwsgi_stderr.log
 stopwaitsecs=26
-stopsignal=INT
+stopsignal=INT{% endraw %}

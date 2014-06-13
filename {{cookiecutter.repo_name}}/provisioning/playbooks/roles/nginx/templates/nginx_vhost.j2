@@ -1,3 +1,4 @@
+{% raw %}
 upstream app_server {
     server unix:///tmp/{{project_name}}.sock;
 }
@@ -24,3 +25,4 @@ server {
         uwsgi_pass  app_server;
     }
 }
+{% endraw %}

@@ -1,4 +1,4 @@
----
+{% raw %}---
 - name: add deployment user
   user: name={{django_user}} password={{django_pass}} shell=/bin/bash uid=1002 groups=www-data append=yes createhome=yes state=present
   tags:
@@ -50,4 +50,4 @@
 - name: "create /var/log/{{project_name}} directory"
   file: path=/var/log/{{project_name}} owner={{django_user}} group=www-data state=directory mode=775
   tags:
-    - setup
+    - setup{% endraw %}

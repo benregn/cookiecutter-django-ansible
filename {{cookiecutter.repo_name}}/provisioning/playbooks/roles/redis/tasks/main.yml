@@ -1,4 +1,4 @@
----
+{% raw %}---
 - name: "install Redis server: {{redis_package}}"
   apt: pkg={{redis_package}} state=installed update_cache=yes cache_valid_time={{six_hours}}
   tags:
@@ -59,4 +59,4 @@
 #   supervisorctl: name={{redmon_service}} state=started
 #   tags:
 #     - redis
-#     - redmon
+#     - redmon{% endraw %}

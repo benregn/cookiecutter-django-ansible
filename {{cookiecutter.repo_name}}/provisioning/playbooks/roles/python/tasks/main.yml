@@ -1,4 +1,4 @@
----
+{% raw %}---
 - name: install python and dependencies using apt
   apt: pkg={{item}} state=installed update_cache=yes cache_valid_time={{six_hours}}
   with_items: "{{python_dependencies}}"
@@ -26,3 +26,4 @@
   file: src=/usr/lib/x86_64-linux-gnu/libz.so dest=/usr/lib/libz.so state=link
   tags:
     - python
+{% endraw %}

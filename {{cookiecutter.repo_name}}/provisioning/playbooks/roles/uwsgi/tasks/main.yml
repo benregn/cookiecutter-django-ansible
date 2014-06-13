@@ -1,4 +1,4 @@
----
+{% raw %}---
 - name: ensure uwsgi /etc/ dirs are present
   file: path=/etc/uwsgi/vassals/ owner=www-data group=www-data state=directory
   tags:
@@ -14,4 +14,4 @@
   notify:
     - restart supervisord
   tags:
-    - uwsgi
+    - uwsgi{% endraw %}
