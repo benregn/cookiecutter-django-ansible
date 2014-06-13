@@ -25,5 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "provisioning/playbooks/site.yml"
     ansible.inventory_path = "provisioning/inventory/local"
+    ansible.limit = 'all'
+    # ansible.verbose = 'vvvv'
   end
 end
