@@ -26,19 +26,21 @@
     - setup
 
 - name: update ssh parameters
-  lineinfile:
+  lineinfile: >
     dest=/etc/ssh/sshd_config
     state=present
     regexp=^{{ item.key }}
     line="{{ item.key }} {{ item.value }}"
     insertafter=EOF
+    backup=yes
   with_items:
     - { key: 'PermitRootLogin', value: 'no' }
     - { key: 'PasswordAuthentication', value: 'no' }
-    - { key: 'LoginGraceTime', value: '20' }
-    - { key: 'X11Forwarding', value: 'no' }
-    - { key: 'ClientAliveInterval', value: '30' }
-    - { key: 'ClientAliveCountMax', value: '1000' }
+    # below prevented ssh to vagrant machine
+    # - { key: 'LoginGraceTime', value: '20' }
+    # - { key: 'X11Forwarding', value: 'no' }
+    # - { key: 'ClientAliveInterval', value: '30' }
+    # - { key: 'ClientAliveCountMax', value: '1000' }
   notify:
     - restart ssh
 
