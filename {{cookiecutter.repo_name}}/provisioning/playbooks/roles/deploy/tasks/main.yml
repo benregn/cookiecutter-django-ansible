@@ -57,8 +57,8 @@
   supervisorctl: name={{ item }} state=restarted
   with_items:
     - "{{ project_name }}"
-    - celerybeat
-    - celeryd
+    # - celerybeat
+    # - celeryd
   sudo: True
   tags:
     - deploy{% endraw %}
