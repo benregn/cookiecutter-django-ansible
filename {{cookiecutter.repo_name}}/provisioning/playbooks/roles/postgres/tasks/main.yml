@@ -48,12 +48,6 @@
   tags:
     - postgres
 
-- name: install psycopg2 globally with pip
-  pip: name=psycopg2 state=present
-  sudo: True
-  tags:
-    - postgres
-
 - name: create a postgres user
   postgresql_user: user={{ postgres_user_name }} password={{ postgres_password }}
   sudo: True
