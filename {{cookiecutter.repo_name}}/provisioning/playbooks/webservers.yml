@@ -4,8 +4,8 @@
   sudo: True
   roles:
     - { role: common }
-    - { role: web }
     - { role: python }
+    - { role: django }
     - { role: supervisor }
     - { role: uwsgi }
     - { role: nginx }
