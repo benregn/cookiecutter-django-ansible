@@ -1,5 +1,12 @@
 ---
 fqdn: localhost
+{% raw %}
+# postgres
+postgres_user_name: "pg_{{ project_name }}"
+postgres_db_name: "db_{{ project_name }}"
+postgres_password: "password"
 env_vars:
-  - {key: 'DJANGO_SETTINGS_MODULE', value: 'config.settings'}
-  - {key: 'DJANGO_CONFIGURATION', value: 'Local'}
+  - { key: 'DJANGO_SETTINGS_MODULE', value: 'config.settings' }
+  - { key: 'DJANGO_CONFIGURATION', value: 'Local' }
+  - { key: 'DATABASE_URL', value: 'postgres://{{ postgres_user_name }}:{{ postgres_password }}@localhost:5432/{{ postgres_db_name }}' }
+{% endraw %}

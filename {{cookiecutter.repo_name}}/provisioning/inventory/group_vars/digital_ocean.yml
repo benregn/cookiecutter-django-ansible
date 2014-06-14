@@ -1,6 +1,13 @@
 ---
 fqdn: {{cookiecutter.domain_name}}
 rabbit_node: rabbit@localhost
+{% raw %}
+# postgres
+postgres_user_name: "pg_{{ project_name }}"
+postgres_db_name: "db_{{ project_name }}"
+postgres_password: "change_me"
 env_vars:
-  - {key: 'DJANGO_SETTINGS_MODULE', value: 'config.settings'}
-  - {key: 'DJANGO_CONFIGURATION', value: 'Production'}
+  - { key: 'DJANGO_SETTINGS_MODULE', value: 'config.settings' }
+  - { key: 'DJANGO_CONFIGURATION', value: 'Production' }
+  - { key: 'DATABASE_URL', value: 'postgres://{{ postgres_user_name }}:{{ postgres_password }}@localhost:5432/{{ postgres_db_name }}' }
+{% endraw %}

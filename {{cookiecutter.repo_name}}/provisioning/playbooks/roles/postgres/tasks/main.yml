@@ -55,14 +55,14 @@
     - postgres
 
 - name: create a postgres user
-  postgresql_user: user={{ lookup('env', 'PSQL_USER') }} password={{ lookup('env', 'PSQL_PASSWORD') }}
+  postgresql_user: user={{ postgres_user_name }} password={{ postgres_password }}
   sudo: True
   sudo_user: postgres
   tags:
     - postgres
 
 - name: create database
-  postgresql_db: name={{ lookup('env', 'PSQL_DB_NAME') }} owner={{ lookup('env', 'PSQL_USER') }}
+  postgresql_db: name={{ postgres_db_name }} owner={{ postgres_user_name }}
   sudo: True
   sudo_user: postgres
   tags:
