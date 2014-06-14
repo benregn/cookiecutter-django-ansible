@@ -35,13 +35,13 @@
 - name: install pip requirements
   pip: >
     virtualenv={{ virtualenv_dir }}
-    requirements={{ code_root_dir }}/{{ reqs_dir }}/{{ reqs_file }}.txt
+    requirements={{ reqs_dir }}/{{ reqs_file }}.txt
   tags:
     - deploy
 
 - name: run django manage commands
   django_manage: >
-    app_path={{ code_root_dir }}
+    app_path={{ django_root_dir }}
     command={{ item }}
     settings={{ settings_module }}
     virtualenv={{ virtualenv_dir }}
