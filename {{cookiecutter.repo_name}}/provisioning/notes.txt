@@ -5,17 +5,6 @@ comment out Vagrant sync_folder before running provision, then uncomment again
 
 install reqs (pip)
 
-put environment vars in /etc/uwsgi/vassals/{{project_name}}.ini
-AND
-put env vars in any of the .bash* files
-List:
-    DJANGO_SETTINGS_MODULE=config.settings
-    RABBITMQ_URL=amqp://django:changeme@localhost:5672//project_name
-    DATABASE_URL=postgres://$PSQL_USER:$PSQL_PASSWORD@localhost:5432/$PSQL_DB_NAME
-    PSQL_USER=user_name
-    PSQL_DB_NAME=db_name
-    PSQL_PASSWORD=plane_text_password
-
 run syncdb & migrate
 
 ansible - need to make log dir & make sure it has correct permissions
@@ -27,7 +16,6 @@ export DJANGO_SETTINGS_MODULE=config.settings
 remember to include the "/" in rabbitmq url if the vhost name is "/project_name", e.g. amqp://django:changeme@localhost:5672//project_name
 note the two "/" before project_name
 
-no ' (single quotes in PSQL_* env vars)
 
 
 {% endraw %}
