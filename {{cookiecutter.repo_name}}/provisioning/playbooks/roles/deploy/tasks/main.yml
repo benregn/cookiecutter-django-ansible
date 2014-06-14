@@ -1,21 +1,6 @@
 {% raw %}---
-- name: git config name
-  shell: git config --global user.name "{{ git_name }}" executable=/bin/bash
-  tags:
-    - deploy
-
-- name: git config email
-  shell: git config --global user.email {{ git_email }} executable=/bin/bash
-  tags:
-    - deploy
-
 - name: copy /.ssh/config
   copy: src=ssh_config dest=/home/{{ django_user }}/.ssh/config
-  tags:
-    - deploy
-
-- name: pull git
-  git: repo={{ git_repo }} dest={{ code_root_dir }}
   tags:
     - deploy
 
