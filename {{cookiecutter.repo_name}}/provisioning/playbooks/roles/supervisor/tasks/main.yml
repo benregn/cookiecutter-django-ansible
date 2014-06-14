@@ -1,6 +1,7 @@
 {% raw %}---
 - name: install supervisor
-  pip: name=supervisor state=latest
+  pip: name={{ item.name }} version={{ item.version }} state=present
+  with_items: supervisor_package
   tags:
     - supervisor
 

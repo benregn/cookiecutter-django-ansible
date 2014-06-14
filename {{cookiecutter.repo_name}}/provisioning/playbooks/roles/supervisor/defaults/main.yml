@@ -1,2 +1,4 @@
 ---
+supervisor_package:
+  - { name: supervisor, version: 3.0 }
 supervisor_conf_location: /etc/supervisord.conf
