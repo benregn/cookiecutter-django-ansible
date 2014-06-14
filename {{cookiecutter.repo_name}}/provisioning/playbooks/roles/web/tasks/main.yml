@@ -4,11 +4,6 @@
   tags:
     - setup
 
-- name: add deployment user to sudoers
-  lineinfile: dest=/etc/sudoers regexp="{{django_user}} ALL" line="{{django_user}} ALL=(ALL) ALL" state=present
-  tags:
-    - setup
-
 - name: "ensure {{django_user}}/.ssh/ dir exists"
   file: path=/home/{{django_user}}/.ssh/ state=directory owner={{django_user}} group={{django_user}} mode=755
   tags:

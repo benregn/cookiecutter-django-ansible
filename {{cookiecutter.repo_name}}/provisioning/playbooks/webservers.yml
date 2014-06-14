@@ -4,6 +4,7 @@
   sudo: True
   roles:
     - { role: common }
+    - { role: web }
     - { role: python }
     - { role: supervisor }
     - { role: uwsgi }
