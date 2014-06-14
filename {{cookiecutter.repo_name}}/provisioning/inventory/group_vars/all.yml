@@ -1,6 +1,6 @@
 ---
 six_hours: 21600
-project_name: {{cookiecutter.project_name}}
+project_name: {{cookiecutter.repo_name}}
 git_repo: git@github.com:username/{{cookiecutter.repo_name}}.git
 git_name: {{cookiecutter.author_name}}
 git_email: {{cookiecutter.email}}
