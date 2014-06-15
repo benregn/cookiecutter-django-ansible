@@ -14,6 +14,7 @@ rabbitmq_password: changeme
 reqs_file: production.txt
 
 env_vars:
+  DJANGO_SECRET_KEY: YOU_HAVE_TO_CHANGE_ME!!!
   DJANGO_SETTINGS_MODULE: config.settings
   DJANGO_CONFIGURATION: Production
   DATABASE_URL: "postgres://{{ postgres_user_name }}:{{ postgres_password }}@localhost:5432/{{ postgres_db_name }}"
