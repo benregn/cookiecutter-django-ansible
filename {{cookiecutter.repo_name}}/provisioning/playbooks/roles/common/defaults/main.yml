@@ -6,3 +6,5 @@ common_pkg:
   - git-core
   - unattended-upgrades
   - fail2ban
+  - htop
+  - mercurial
