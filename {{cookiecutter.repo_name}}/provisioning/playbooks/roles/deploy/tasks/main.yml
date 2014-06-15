@@ -9,13 +9,15 @@
   tags:
     - deploy
 
-- name: "ensure correct permission in /var/log/{{project_name}}"
-  command: "{{ item }}"
-  with_items:
-    - "chown --recursive {{ django_user }}:www-data /var/log/{{ project_name }}"
-    - "chmod --recursive 775 /var/log/{{ project_name }}"
-  tags:
-    - deploy
+# shouldn't be needed, already set permissions when creating dir
+# check if works without
+# - name: "ensure correct permission in /var/log/{{project_name}}"
+#   command: "{{ item }}"
+#   with_items:
+#     - "chown --recursive {{ django_user }}:www-data /var/log/{{ project_name }}"
+#     - "chmod --recursive 775 /var/log/{{ project_name }}"
+#   tags:
+#     - deploy
 
 - name: install pip requirements
   pip: >
