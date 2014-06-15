@@ -9,3 +9,4 @@
     - { role: supervisor }
     - { role: uwsgi }
     - { role: nginx }
+    - { role: deploy }
