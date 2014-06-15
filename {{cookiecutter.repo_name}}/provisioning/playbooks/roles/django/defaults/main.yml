@@ -1,5 +1,6 @@
 ---
 setup_pkg:
-    - memcached
-    - libmemcached-dev
-    - libevent-dev
+  - memcached
+  - libmemcached-dev
+  - libevent-dev
+  - libpq-dev
