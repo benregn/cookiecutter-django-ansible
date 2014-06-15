@@ -11,4 +11,4 @@ autostart=true
 autorestart=true
 startsecs=5
 
-environment={% for item in env_vars %}{{ item.key }}="{{ item.value }}"{% if not loop.last %},{% endif %}{% endfor %}{% endraw %}
+environment={% for key, value in env_vars.items() %}{{ key }}="{{ value }}"{% if not loop.last %},{% endif %}{% endfor %}{% endraw %}

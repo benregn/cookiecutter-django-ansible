@@ -28,6 +28,6 @@ export LANG=en_US.utf8
 export LC_ALL=en_US.UTF-8
 export LC_LANG=en_US.UTF-8
 
-{% for item in env_vars %}
-export {{ item.key }}={{ item.value }}
-{% endfor %}{% endraw %}
+{% for key, value in env_vars.items() %}
+export {{ key }}={{ value }}
+{% endfor %}

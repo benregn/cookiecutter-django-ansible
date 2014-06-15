@@ -2,8 +2,8 @@
 # master
 master = true
 
-{% for item in env_vars %}
-env = {{ item.key }}={{ item.value }}
+{% for key, value in env_vars.items() %}
+env = {{ key }}={{ value }}
 {% endfor %}
 
 # maximum number of processes
