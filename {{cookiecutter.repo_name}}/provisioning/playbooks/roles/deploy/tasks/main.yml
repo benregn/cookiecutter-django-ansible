@@ -19,6 +19,14 @@
 #   tags:
 #     - deploy
 
+- name: ensure correct permissions on virtualenv dir
+  file: >
+    path={{ virtualenv_dir }}
+    recurse=yes
+    state=directory
+    owner={{ django_user }}
+    group=www-data
+
 - name: install pip requirements
   pip: >
     virtualenv={{ virtualenv_dir }}
