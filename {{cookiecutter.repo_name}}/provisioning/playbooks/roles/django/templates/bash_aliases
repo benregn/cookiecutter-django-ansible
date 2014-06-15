@@ -31,3 +31,4 @@ export LC_LANG=en_US.UTF-8
 {% for key, value in env_vars.items() %}
 export {{ key }}={{ value }}
 {% endfor %}
+{% endraw %}
