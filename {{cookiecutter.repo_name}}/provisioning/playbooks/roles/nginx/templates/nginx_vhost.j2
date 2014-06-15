@@ -1,6 +1,6 @@
 {% raw %}
 upstream app_server {
-    server unix:///tmp/{{project_name}}.sock;
+    server 127.0.0.1:8001;
 }
 
 server {
