@@ -7,13 +7,15 @@ env = {{ key }}={{ value }}
 {% endfor %}
 
 # maximum number of processes
-processes = 4
+# simple rule is no. of cores on machine
+processes = {{ ansible_processor_cores }}
 
 # Kill unresponsive process after X sec
 harakiri = 30
 
-# the socket (use the full path to be safe)
-socket = /tmp/{{project_name}}.sock
+# reload workers after the specified amount of managed requests
+max-requests = 5000
+
 # the socket
 socket = 127.0.0.1:8001
 
