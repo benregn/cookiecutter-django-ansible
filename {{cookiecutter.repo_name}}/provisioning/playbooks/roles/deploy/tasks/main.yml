@@ -20,7 +20,7 @@
 - name: install pip requirements
   pip: >
     virtualenv={{ virtualenv_dir }}
-    requirements={{ reqs_dir }}/{{ reqs_file }}.txt
+    requirements={{ reqs_dir }}/{{ reqs_file }}
   tags:
     - deploy
 

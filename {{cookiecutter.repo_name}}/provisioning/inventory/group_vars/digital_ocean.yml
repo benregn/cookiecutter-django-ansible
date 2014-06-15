@@ -11,6 +11,8 @@ postgres_password: "change_me"
 rabbitmq_user: django
 rabbitmq_password: changeme
 
+reqs_file: production.txt
+
 env_vars:
   DJANGO_SETTINGS_MODULE: config.settings
   DJANGO_CONFIGURATION: Production
