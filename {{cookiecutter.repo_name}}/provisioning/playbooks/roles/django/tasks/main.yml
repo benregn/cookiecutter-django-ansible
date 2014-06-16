@@ -5,17 +5,32 @@
     - setup
 
 - name: "ensure {{django_user}}/.ssh/ dir exists"
-  file: path=/home/{{django_user}}/.ssh/ state=directory owner={{django_user}} group={{django_user}} mode=755
+  file: >
+    path=/home/{{django_user}}/.ssh/
+    state=directory
+    mode=700
+    owner={{django_user}}
+    group={{django_user}}
   tags:
     - setup
 
 - name: "copy public ssh key over for {{django_user}}"
-  copy: src=../keys/key.pub dest=/home/{{django_user}}/.ssh/id_rsa.pub mode=644
+  copy: >
+    src=../keys/key.pub
+    dest=/home/{{django_user}}/.ssh/id_rsa.pub
+    mode=644
+    owner={{django_user}}
+    group={{django_user}}
   tags:
     - setup
 
 - name: "copy private ssh key over for {{django_user}}"
-  copy: src=../keys/key dest=/home/{{django_user}}/.ssh/id_rsa mode=644
+  copy: >
+    src=../keys/key
+    dest=/home/{{django_user}}/.ssh/id_rsa
+    mode=644
+    owner={{django_user}}
+    group={{django_user}}
   tags:
     - setup
 
