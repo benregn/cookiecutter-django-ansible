@@ -28,7 +28,7 @@
   copy: >
     src=../keys/key
     dest=/home/{{django_user}}/.ssh/id_rsa
-    mode=644
+    mode=600
     owner={{django_user}}
     group={{django_user}}
   tags:
