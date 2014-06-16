@@ -1,16 +1,24 @@
 {% raw %}---
 - name: add deployment user
-  user: name={{django_user}} password={{django_pass}} shell=/bin/bash uid=1002 groups=www-data append=yes createhome=yes state=present
+  user: >
+    name={{django_user}}
+    password={{django_pass}}
+    shell=/bin/bash
+    uid=1002
+    groups=www-data
+    append=yes
+    createhome=yes
+    state=present
   tags:
     - setup
 
 - name: "ensure {{django_user}}/.ssh/ dir exists"
   file: >
     path=/home/{{django_user}}/.ssh/
-    state=directory
     mode=700
     owner={{django_user}}
     group={{django_user}}
+    state=directory
   tags:
     - setup
 
@@ -35,29 +43,48 @@
     - setup
 
 - name: "add ssh key for: {{django_user}}"
-  authorized_key: user={{ django_user }} key="{{ item }}"
+  authorized_key: >
+    user={{ django_user }}
+    key="{{ item }}"
   with_file:
     - ../../../../keys/key.pub
   tags:
     - setup
 
 - name: write .bash_aliases
-  template: src=bash_aliases dest=/home/{{django_user}}/.bash_aliases owner={{django_user}} group=www-data
+  template: >
+    src=bash_aliases
+    dest=/home/{{django_user}}/.bash_aliases
+    owner={{django_user}}
+    group=www-data
   tags:
     - setup
 
 - name: write .bashrc
-  copy: src=bashrc dest=/home/{{django_user}}/.bashrc owner={{django_user}} group=www-data
+  copy: >
+    src=bashrc
+    dest=/home/{{django_user}}/.bashrc
+    owner={{django_user}}
+    group=www-data
   tags:
     - setup
 
 - name: install web packages
-  apt: pkg={{item}} state=installed update_cache=yes cache_valid_time={{six_hours}}
+  apt: >
+    pkg={{item}}
+    update_cache=yes
+    cache_valid_time={{six_hours}}
+    state=installed
   with_items: setup_pkg
   tags:
     - setup
 
 - name: "create /var/log/{{project_name}} directory"
-  file: path=/var/log/{{project_name}} owner={{django_user}} group=www-data state=directory mode=775
+  file: >
+    path=/var/log/{{project_name}}
+    owner={{django_user}}
+    group=www-data
+    state=directory
+    mode=775
   tags:
     - setup{% endraw %}

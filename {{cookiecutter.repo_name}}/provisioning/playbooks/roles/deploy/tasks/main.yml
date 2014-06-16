@@ -1,11 +1,17 @@
 {% raw %}---
 - name: copy /.ssh/config
-  copy: src=ssh_config dest=/home/{{ django_user }}/.ssh/config owner={{django_user}} group={{django_user}}
+  copy: >
+    src=ssh_config
+    dest=/home/{{ django_user }}/.ssh/config
+    owner={{django_user}}
+    group={{django_user}}
   tags:
     - deploy
 
 - name: "ensure ~/.virtualenvs/{{project_name}} dir is created"
-  file: path={{ virtualenv_dir }} state=directory
+  file: >
+    path={{ virtualenv_dir }}
+    state=directory
   tags:
     - deploy
 
@@ -23,9 +29,9 @@
   file: >
     path={{ virtualenv_dir }}
     recurse=yes
-    state=directory
     owner={{ django_user }}
     group=www-data
+    state=directory
   tags:
     - deploy
 
@@ -33,9 +39,9 @@
   file: >
     path={{ code_root_dir }}
     recurse=yes
-    state=directory
     owner={{ django_user }}
     group=www-data
+    state=directory
   tags:
     - deploy
 
@@ -73,7 +79,9 @@
   environment: env_vars
 
 - name: "restart supervisor managed processes"
-  supervisorctl: name={{ item }} state=restarted
+  supervisorctl: >
+    name={{ item }}
+    state=restarted
   with_items:
     - "{{ project_name }}"
     # - celerybeat

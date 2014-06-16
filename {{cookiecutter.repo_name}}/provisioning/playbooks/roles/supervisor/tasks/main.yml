@@ -1,40 +1,58 @@
 {% raw %}---
 - name: install supervisor
-  pip: name={{ item.name }} version={{ item.version }} state=present
+  pip: >
+    name={{ item.name }}
+    version={{ item.version }}
+    state=present
   with_items: supervisor_package
   tags:
     - supervisor
 
 - name: add supervisord.conf
-  copy: src=supervisord.conf dest={{supervisor_conf_location}}
+  copy: >
+    src=supervisord.conf
+    dest={{supervisor_conf_location}}
   notify:
     - restart supervisord
   tags:
     - supervisor
 
 - name: create /etc/supervisor directory
-  file: path=/etc/supervisor state=directory
+  file: >
+    path=/etc/supervisor
+    state=directory
   tags:
     - supervisor
 
 - name: create /var/log/supervisor directory
-  file: path=/var/log/supervisor state=directory
+  file: >
+    path=/var/log/supervisor
+    state=directory
   tags:
     - supervisor
 
 - name: add supervisord init.d script
-  template: src=supervisord dest=/etc/init.d/supervisord owner=root group=root mode='755' force=yes
+  template: >
+    src=supervisord
+    dest=/etc/init.d/supervisord
+    owner=root
+    group=root
+    force=yes
+    mode=755
   notify: restart supervisord
   tags:
     - supervisor
 
 - name: start supervisord on boot
   command: update-rc.d supervisord defaults
-  notify: restart supervisord
+  notify:
+    - restart supervisord
   tags:
     - supervisor
 
 - name: ensure supervisor is started
-  service: name=supervisord state=started
+  service: >
+    name=supervisord
+    state=started
   tags:
     - supervisor{% endraw %}

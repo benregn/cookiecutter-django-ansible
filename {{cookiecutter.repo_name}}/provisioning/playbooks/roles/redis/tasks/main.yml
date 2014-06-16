@@ -1,23 +1,37 @@
 {% raw %}---
 - name: "install Redis server: {{redis_package}}"
-  apt: pkg={{redis_package}} state=installed update_cache=yes cache_valid_time={{six_hours}}
+  apt: >
+    pkg={{redis_package}}
+    update_cache=yes
+    cache_valid_time={{six_hours}}
+    state=installed
   tags:
     - redis
 
 - name: bind Redis server to all interfaces
-  lineinfile: dest=/etc/redis/redis.conf state=present regexp="^#?bind" line="#bind 127.0.0.1"
+  lineinfile: >
+    dest=/etc/redis/redis.conf
+    regexp="^#?bind"
+    line="#bind 127.0.0.1"
+    state=present
   notify:
     - restart Redis
   tags:
     - redis
 
 - name: ensure Redis server is running
-  service: name={{redis_package}} state=started
+  service: >
+    name={{redis_package}}
+    state=started
   tags:
     - redis
 
 - name: install Redmon dependencies
-  apt: pkg={{item}} state=installed update_cache=yes cache_valid_time={{six_hours}}
+  apt: >
+    pkg={{item}}
+    update_cache=yes
+    cache_valid_time={{six_hours}}
+    state=installed
   with_items: redmon_dependencies
   tags:
     - redis
@@ -36,7 +50,9 @@
     - redmon
 
 - name: install gems requered for Redmon
-  gem: name={{item}} state=present
+  gem: >
+    name={{item}}
+    state=present
   with_items: redmon_gems
   sudo: False
   tags:
@@ -44,7 +60,10 @@
     - redmon
 
 - name: "link {{redmon_service}} to /usr/local/bin"
-  file: src=/home/vagrant/.gem/ruby/1.9.1/bin/redmon dest=/usr/local/bin/redmon state=link
+  file: >
+    src=/home/vagrant/.gem/ruby/1.9.1/bin/redmon
+    dest=/usr/local/bin/redmon
+    state=link
   tags:
     - redis
     - redmon

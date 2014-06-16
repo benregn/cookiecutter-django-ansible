@@ -1,36 +1,53 @@
 {% raw %}---
 - name: add nginx ppa
-  apt_repository: repo=ppa:nginx/stable state=present update_cache=yes
+  apt_repository: >
+    repo=ppa:nginx/stable
+    update_cache=yes
+    state=present
   tags:
     - nginx
 
 - name: install nginx package
-  apt: pkg=nginx state=latest update_cache=yes cache_valid_time={{six_hours}}
+  apt: >
+    pkg=nginx
+    update_cache=yes
+    cache_valid_time={{six_hours}}
+    state=latest
   sudo: True
   tags:
     - nginx
 
 - name: remove default nginx site
-  file: path=/etc/nginx/sites-enabled/default state=absent
+  file: >
+    path=/etc/nginx/sites-enabled/default
+    state=absent
   notify:
     - restart nginx
   tags:
     - nginx
 
 - name: write nginx.conf
-  template: src=nginx.j2 dest=/etc/nginx/nginx.conf # validate="nginx -t -c %s"
+  template: >
+    src=nginx.j2
+    dest=/etc/nginx/nginx.conf
+    # validate="nginx -t -c %s"
   notify:
     - restart nginx
   tags:
     - nginx
 
 - name: add vhost config to sites-available
-  template: src=nginx_vhost.j2 dest=/etc/nginx/sites-available/{{project_name}}.conf
+  template: >
+    src=nginx_vhost.j2
+    dest=/etc/nginx/sites-available/{{project_name}}.conf
   tags:
     - nginx
 
 - name: symlink nginx site conf to sites-enabled
-  file: src=/etc/nginx/sites-available/{{project_name}}.conf dest=/etc/nginx/sites-enabled/{{project_name}}.conf state=link
+  file: >
+    src=/etc/nginx/sites-available/{{project_name}}.conf
+    dest=/etc/nginx/sites-enabled/{{project_name}}.conf
+    state=link
   notify:
     - restart nginx
   tags:

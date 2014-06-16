@@ -1,29 +1,42 @@
 {% raw %}---
 - name: install python and dependencies using apt
-  apt: pkg={{item}} state=installed update_cache=yes cache_valid_time={{six_hours}}
+  apt: >
+    pkg={{item}}
+    update_cache=yes
+    cache_valid_time={{six_hours}}
+    state=installed
   with_items: python_dependencies
   tags:
     - python
 
 - name: install pip
-  easy_install: name=pip
+  easy_install: >
+    name=pip
   tags:
     - python
 
 - name: install various libraries with pip
-  pip: name={{item.name}} version={{item.version}} state=present
+  pip: >
+    name={{item.name}}
+    version={{item.version}}
+    state=present
   with_items: python_pip_global_packages
   tags:
     - python
 
 - name: symlink imaging library files
-  file: src=/usr/lib/x86_64-linux-gnu/libfreetype.so dest=/usr/lib/libfreetype.so state=link
+  file: >
+    src=/usr/lib/x86_64-linux-gnu/libfreetype.so
+    dest=/usr/lib/libfreetype.so
+    state=link
   tags:
     - python
 
 
 - name: symlink imaging library files
-  file: src=/usr/lib/x86_64-linux-gnu/libz.so dest=/usr/lib/libz.so state=link
+  file: >
+    src=/usr/lib/x86_64-linux-gnu/libz.so
+    dest=/usr/lib/libz.so state=link
   tags:
     - python
 {% endraw %}

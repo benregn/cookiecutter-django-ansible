@@ -1,38 +1,38 @@
 {% raw %}---
 - name: update APT package cache and aptitude safe-upgrade
-  apt: update_cache=yes upgrade=yes cache_valid_time={{six_hours}}
+  apt: >
+    update_cache=yes
+    upgrade=yes
+    cache_valid_time={{six_hours}}
   tags:
     - setup
 
 - name: install common packages
-  apt: pkg={{item}} state=installed update_cache=yes cache_valid_time={{six_hours}}
+  apt: >
+    pkg={{item}}
+    update_cache=yes
+    cache_valid_time={{six_hours}}
+    state=installed
   with_items: common_pkg
   tags:
     - setup
 
-# - name: add custom ssh key for vagrant
-#   authorized_key: user=vagrant key="{{ lookup('file', '~/.ssh/v.pub') }}"
-#   tags:
-#     - setup
-
-# - name: remove default insecure ssh key
-#   lineinfile: dest=/home/vagrant/.ssh/authorized_keys regexp="vagrant insecure public key" state=absent
-#   tags:
-#     - setup
-
 - name: remove sudo group rights
-  lineinfile: dest=/etc/sudoers regexp="^%sudo" state=absent
+  lineinfile: >
+    dest=/etc/sudoers
+    regexp="^%sudo"
+    state=absent
   tags:
     - setup
 
 - name: update ssh parameters
   lineinfile: >
     dest=/etc/ssh/sshd_config
-    state=present
     regexp=^{{ item.key }}
     line="{{ item.key }} {{ item.value }}"
     insertafter=EOF
     backup=yes
+    state=present
   with_items:
     - { key: 'PermitRootLogin', value: 'no' }
     - { key: 'PasswordAuthentication', value: 'no' }
@@ -45,18 +45,24 @@
     - restart ssh
 
 - name: add custom ssh key for root
-  authorized_key: user=root key="{{ item }}"
+  authorized_key: >
+    user=root
+    key="{{ item }}"
   with_file:
     - ../../../../keys/key.pub
   tags:
     - setup
 
 - name: adjust APT update intervals
-  copy: src=apt_periodic dest=/etc/apt/apt.conf.d/10periodic
+  copy: >
+    src=apt_periodic
+    dest=/etc/apt/apt.conf.d/10periodic
   tags:
     - setup
 
 - name: "make sure unattended-upgrades only installs from {{common_ubuntu_release}}-security"
-  copy: src=50unattended-upgrades dest=/etc/apt/apt.conf.d/50unattended-upgrades
+  copy: >
+    src=50unattended-upgrades
+    dest=/etc/apt/apt.conf.d/50unattended-upgrades
   tags:
     - setup{% endraw %}

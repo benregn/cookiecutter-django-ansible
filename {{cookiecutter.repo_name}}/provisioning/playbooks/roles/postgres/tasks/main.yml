@@ -1,18 +1,27 @@
 {% raw %}---
 - name: add postgres signing key
   sudo: True
-  apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
+  apt_key: >
+    url=https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    state=present
   tags:
     - postgres
 
 - name: add postgres apt repo
-  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main' state=present update_cache=yes
+  apt_repository: >
+    repo='deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main'
+    update_cache=yes
+    state=present
   sudo: True
   tags:
     - postgres
 
 - name: install postgres packages
-  apt: pkg={{item}} state=installed update_cache=yes cache_valid_time={{six_hours}}
+  apt: >
+    pkg={{item}}
+    update_cache=yes
+    cache_valid_time={{six_hours}}
+    state=installed
   sudo: True
   with_items: postgres_packages
   tags:
@@ -33,7 +42,9 @@
 #     - postgres
 
 - name: update postgres client configuration
-  copy: src=pg_hba.conf dest=/etc/postgresql/9.3/main/pg_hba.conf
+  copy: >
+    src=pg_hba.conf
+    dest=/etc/postgresql/9.3/main/pg_hba.conf
   sudo: True
   notify:
     - restart postgresql
@@ -41,7 +52,12 @@
     - postgres
 
 - name: change listen_addresses to '*'
-  lineinfile: dest=/etc/postgresql/9.3/main/postgresql.conf regexp="^#listen_addresses" line="listen_addresses = '*'" state=present backup=yes
+  lineinfile: >
+    dest=/etc/postgresql/9.3/main/postgresql.conf
+    regexp="^#listen_addresses"
+    line="listen_addresses = '*'"
+    state=present
+    backup=yes
   sudo: True
   notify:
     - restart postgresql
@@ -49,14 +65,18 @@
     - postgres
 
 - name: create a postgres user
-  postgresql_user: user={{ postgres_user_name }} password={{ postgres_password }}
+  postgresql_user: >
+    user={{ postgres_user_name }}
+    password={{ postgres_password }}
   sudo: True
   sudo_user: postgres
   tags:
     - postgres
 
 - name: create database
-  postgresql_db: name={{ postgres_db_name }} owner={{ postgres_user_name }}
+  postgresql_db: >
+    name={{ postgres_db_name }}
+    owner={{ postgres_user_name }}
   sudo: True
   sudo_user: postgres
   tags:
