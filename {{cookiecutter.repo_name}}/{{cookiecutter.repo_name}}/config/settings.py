@@ -340,46 +340,46 @@ class Production(Common):
     ########## END SITE CONFIGURATION
 
     ########## STORAGE CONFIGURATION
-    # See: http://django-storages.readthedocs.org/en/latest/index.html
-    INSTALLED_APPS += (
-        'storages',
-    )
+    # # See: http://django-storages.readthedocs.org/en/latest/index.html
+    # INSTALLED_APPS += (
+    #     'storages',
+    # )
 
-    # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
-    STATICFILES_STORAGE = DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    # # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
+    # STATICFILES_STORAGE = DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
-    # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
-    AWS_ACCESS_KEY_ID = values.SecretValue()
-    AWS_SECRET_ACCESS_KEY = values.SecretValue()
-    AWS_STORAGE_BUCKET_NAME = values.SecretValue()
-    AWS_AUTO_CREATE_BUCKET = True
-    AWS_QUERYSTRING_AUTH = False
+    # # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
+    # AWS_ACCESS_KEY_ID = values.SecretValue()
+    # AWS_SECRET_ACCESS_KEY = values.SecretValue()
+    # AWS_STORAGE_BUCKET_NAME = values.SecretValue()
+    # AWS_AUTO_CREATE_BUCKET = True
+    # AWS_QUERYSTRING_AUTH = False
 
-    # see: https://github.com/antonagestam/collectfast
-    AWS_PRELOAD_METADATA = True
-    INSTALLED_APPS += ("collectfast", )
+    # # see: https://github.com/antonagestam/collectfast
+    # AWS_PRELOAD_METADATA = True
+    # INSTALLED_APPS += ("collectfast", )
 
-    # AWS cache settings, don't change unless you know what you're doing:
-    AWS_EXPIREY = 60 * 60 * 24 * 7
-    AWS_HEADERS = {
-        'Cache-Control': 'max-age=%d, s-maxage=%d, must-revalidate' % (AWS_EXPIREY,
-            AWS_EXPIREY)
-    }
+    # # AWS cache settings, don't change unless you know what you're doing:
+    # AWS_EXPIREY = 60 * 60 * 24 * 7
+    # AWS_HEADERS = {
+    #     'Cache-Control': 'max-age=%d, s-maxage=%d, must-revalidate' % (AWS_EXPIREY,
+    #         AWS_EXPIREY)
+    # }
 
-    # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
-    STATIC_URL = 'https://s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
+    # # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
+    # STATIC_URL = 'https://s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
     ########## END STORAGE CONFIGURATION
 
     ########## EMAIL
     DEFAULT_FROM_EMAIL = values.Value(
             '{{cookiecutter.project_name}} <noreply@{{cookiecutter.domain_name}}>')
     EMAIL_HOST = values.Value('smtp.sendgrid.com')
-    EMAIL_HOST_PASSWORD = values.SecretValue(environ_prefix="", environ_name="SENDGRID_PASSWORD")
-    EMAIL_HOST_USER = values.SecretValue(environ_prefix="", environ_name="SENDGRID_USERNAME")
+    # EMAIL_HOST_PASSWORD = values.SecretValue(environ_prefix="", environ_name="SENDGRID_PASSWORD")
+    # EMAIL_HOST_USER = values.SecretValue(environ_prefix="", environ_name="SENDGRID_USERNAME")
     EMAIL_PORT = values.IntegerValue(587, environ_prefix="", environ_name="EMAIL_PORT")
     EMAIL_SUBJECT_PREFIX = values.Value('[{{cookiecutter.project_name}}] ', environ_name="EMAIL_SUBJECT_PREFIX")
     EMAIL_USE_TLS = True
-    SERVER_EMAIL = EMAIL_HOST_USER
+    # SERVER_EMAIL = EMAIL_HOST_USER
     ########## END EMAIL
 
     ########## TEMPLATE CONFIGURATION
