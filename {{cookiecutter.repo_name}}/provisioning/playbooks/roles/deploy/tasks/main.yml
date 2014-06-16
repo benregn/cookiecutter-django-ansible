@@ -1,6 +1,6 @@
 {% raw %}---
 - name: copy /.ssh/config
-  copy: src=ssh_config dest=/home/{{ django_user }}/.ssh/config
+  copy: src=ssh_config dest=/home/{{ django_user }}/.ssh/config owner={{django_user}} group={{django_user}}
   tags:
     - deploy
 
@@ -26,6 +26,30 @@
     state=directory
     owner={{ django_user }}
     group=www-data
+  tags:
+    - deploy
+
+- name: ensure correct permissions on code_root_dir dir
+  file: >
+    path={{ code_root_dir }}
+    recurse=yes
+    state=directory
+    owner={{ django_user }}
+    group=www-data
+  tags:
+    - deploy
+
+- name: pull git
+  git: >
+    repo={{ git_repo }}
+    dest={{ code_root_dir }}
+    accept_hostkey=yes
+    key_file=/home/{{ django_user }}/.ssh/id_rsa
+  update: True
+  sudo: False
+  when: is_production
+  tags:
+    - deploy
 
 - name: install pip requirements
   pip: >
