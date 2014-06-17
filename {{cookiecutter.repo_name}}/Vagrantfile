@@ -25,6 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ansible.playbook = "provisioning/playbooks/site.yml"
     ansible.inventory_path = "provisioning/inventory/local"
     ansible.limit = 'all'
+    ansible.extra_vars = { ansible_ssh_user: 'vagrant' }
     # ansible.verbose = 'vvvv'
   end
 end
