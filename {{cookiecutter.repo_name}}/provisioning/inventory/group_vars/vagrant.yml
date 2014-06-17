@@ -12,6 +12,8 @@ rabbitmq_password: changeme
 
 reqs_file: local.txt
 
+is_production: False
+
 env_vars:
   DJANGO_SETTINGS_MODULE: config.settings
   DJANGO_CONFIGURATION: Local
