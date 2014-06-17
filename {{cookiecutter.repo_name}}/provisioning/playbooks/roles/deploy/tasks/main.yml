@@ -51,7 +51,7 @@
     dest={{ code_root_dir }}
     accept_hostkey=yes
     key_file=/home/{{ django_user }}/.ssh/id_rsa
-  update: True
+    update=yes
   sudo: False
   when: is_production
   tags:
