@@ -15,8 +15,8 @@
     owner={{ django_user }}
     group=www-data
     state=directory
-   tags:
-     - deploy
+  tags:
+    - deploy
 
 - name: ensure correct permissions on code_root_dir dir
   file: >
