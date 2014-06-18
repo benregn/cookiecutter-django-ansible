@@ -1,6 +1,5 @@
 ---
 fqdn: {{cookiecutter.domain_name}}
-rabbit_node: rabbit@localhost
 {% raw %}
 # postgres
 postgres_user_name: "pg_{{ project_name }}"
@@ -10,6 +9,7 @@ postgres_password: "change_me"
 # rabbitmq
 rabbitmq_user: django
 rabbitmq_password: changeme
+rabbit_node: rabbit@localhost
 
 reqs_file: production.txt
 

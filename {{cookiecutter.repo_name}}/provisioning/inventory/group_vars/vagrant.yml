@@ -9,6 +9,7 @@ postgres_password: "password"
 # rabbitmq
 rabbitmq_user: django
 rabbitmq_password: changeme
+rabbit_node: rabbit@vagrant-ubuntu-trusty-64
 
 reqs_file: local.txt
 
