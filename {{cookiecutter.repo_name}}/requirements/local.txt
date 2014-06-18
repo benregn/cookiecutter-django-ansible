@@ -4,6 +4,7 @@ coverage==3.7.1
 Sphinx
 dj-cmd
 ipython
+Werkzeug>=0.9.6,<1.0.0
 
 # django-debug-toolbar that works with Django 1.5+
 django-debug-toolbar==1.2.1
