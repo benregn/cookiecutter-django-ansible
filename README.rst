@@ -1,9 +1,10 @@
 cookiecutter-django-ansible
 =======================
 
-A cookiecutter_ template for Django.
+A cookiecutter_ template for Django. Based on pydanny's `cookiecutter-django`_.
 
 .. _cookiecutter: https://github.com/audreyr/cookiecutter
+.. _cookiecutter-django: https://github.com/pydanny/cookiecutter-django
 
 Features
 ---------
@@ -13,17 +14,17 @@ Features
 * Settings management via django-configurations_
 * Registration via django-allauth_
 * User avatars via django-avatar_
-* Procfile_ for deploying to Heroku
-* Heroku optimized requirements
 * Basic caching setup
 * Grunt build for compass and livereload
-* Basic e-mail configurations for send emails via SendGrid_
+* Vagrant development environment
+* Ready to deploy to `Digital Ocean`_
+.. * Basic e-mail configurations for send emails via SendGrid_
 
 .. _Bootstrap: https://github.com/twbs/bootstrap
 .. _django-configurations: https://github.com/jezdez/django-configurations
 .. _django-allauth: https://github.com/pennersr/django-allauth
 .. _django-avatar: https://github.com/jezdez/django-avatar/
-.. _Procfile: https://devcenter.heroku.com/articles/procfile
+.. _Digital Ocean: https://www.digitalocean.com/
 .. _SendGrid: https://sendgrid.com/
 
 
@@ -47,12 +48,12 @@ First, get cookiecutter. Trust me, it's awesome::
 
 Now run it against this repo::
 
-    $ cookiecutter https://github.com/pydanny/cookiecutter-django.git
+    $ cookiecutter https://github.com/benregn/cookiecutter-django-ansible.git
 
 You'll be prompted for some questions, answer them, then it will create a Django project for you.
 
 
-**Warning**: After this point, change 'Daniel Greenfeld', 'pydanny', etc to your own information.
+**Warning**: After this point, change 'Tomas Thor Jonsson', 'benregn', etc to your own information.
 
 It prompts you for questions. Answer them::
 
@@ -64,11 +65,11 @@ It prompts you for questions. Answer them::
     Resolving deltas: 100% (283/283), done.
     project_name (default is "project_name")? Reddit Clone
     repo_name (default is "repo_name")? redditclone
-    author_name (default is "Your Name")? Daniel Greenfeld
-    email (default is "Your email")? pydanny@gmail.com
+    author_name (default is "Your Name")? Tomas Thor Jonsson
+    email (default is "Your email")? benregn@gmail.com
     description (default is "A short description of the project.")? A reddit clone.
     year (default is "Current year")? 2014
-    domain_name (default is "Domain name")?
+    domain_name (default is "example.com")?
 
 
 Enter the project and take a look around::
@@ -81,7 +82,7 @@ Create a GitHub repo and push it there::
     $ git init
     $ git add .
     $ git commit -m "first awesome commit"
-    $ git remote add origin git@github.com:pydanny/redditclone.git
+    $ git remote add origin git@github.com:benregn/redditclone.git
     $ git push -u origin master
 
 Now take a look at your repo. Don't forget to carefully look at the generated README. Awesome, right?
@@ -89,47 +90,56 @@ Now take a look at your repo. Don't forget to carefully look at the generated RE
 Getting up and running
 ----------------------
 
-The steps below will get you up and running with a local development environment. We assume you have the following installed:
+The steps below will get you up and running with a local development environment.
 
-* pip
-* virtualenv
-* PostgreSQL
+**Install ansible**
 
-First make sure to create and activate a virtualenv_, then open a terminal at the project root and install the requirements for local development::
+First step is to install ansible_.
 
-    $ pip install -r requirements/local.txt
+.. _ansible: http://www.ansible.com/home
 
-.. _virtualenv: http://docs.python-guide.org/en/latest/dev/virtualenvs/
+If you are on OSX you can use Homebrew::
 
-You can now run the usual Django ``runserver`` command (replace ``yourapp`` with the name of the directory containing the Django project)::
+    $ brew update
+    $ brew install ansible
 
-    $ python yourapp/manage.py runserver
+If not, ansible is available from PyPi via pip::
 
-The base app will run but you'll need to carry out a few steps to make the sign-up and login forms work. These are currently detailed in `issue #39`_.
+    $ sudo pip install ansible
 
-.. _issue #39: https://github.com/pydanny/cookiecutter-django/issues/39
+Other installation methods are listed in the `ansible installation docs`_.
 
-**Live reloading and Sass CSS compilation**
+.. _ansible installation docs: http://docs.ansible.com/intro_installation.html
 
-If you'd like to take advantage of live reloading and Sass / Compass CSS compilation you can do so with the included Grunt task.
+**Vagrant**
 
-Make sure that nodejs_ is installed. Then in the project root run::
+When you got ansible installled, you can run::
 
-    $ npm install
+    $ vagrant up
 
-.. _nodejs: http://nodejs.org/download/
+And wait until ansible finishes provisioning the VM.
 
-Now you just need::
+.. **Live reloading and Sass CSS compilation**
 
-    $ grunt serve
+.. If you'd like to take advantage of live reloading and Sass / Compass CSS compilation you can do so with the included Grunt task.
 
-The base app will now run as it would with the usual ``manage.py runserver`` but with live reloading and Sass compilation enabled.
+.. Make sure that nodejs_ is installed. Then in the project root run::
 
-To get live reloading to work you'll probably need to install an `appropriate browser extension`_
+..     $ npm install
 
-.. _appropriate browser extension: http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions-
+.. .. _nodejs: http://nodejs.org/download/
 
-It's time to write the code!!!
+.. Now you just need::
+
+..     $ grunt serve
+
+.. The base app will now run as it would with the usual ``manage.py runserver`` but with live reloading and Sass compilation enabled.
+
+.. To get live reloading to work you'll probably need to install an `appropriate browser extension`_
+
+.. .. _appropriate browser extension: http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions-
+
+.. It's time to write the code!!!
 
 "Your Stuff"
 -------------
@@ -157,25 +167,6 @@ tagged release of cookiecutter-django, then you have to install Cookiecutter dir
 Not Exactly What You Want?
 ---------------------------
 
-This is what I want. *It might not be what you want.* Don't worry, you have options:
-
-Fork This
-~~~~~~~~~~
-
-If you have differences in your preferred setup, I encourage you to fork this to create your own version.
-Once you have your fork working, let me know and I'll add it to a '*Similar Cookiecutter Templates*' list here.
-It's up to you whether or not to rename your fork.
-
-If you do rename your fork, I encourage you to submit it to the following places:
-
-* cookiecutter_ so it gets listed in the README as a template.
-* The cookiecutter grid_ on Django Packages.
-
-.. _cookiecutter: https://github.com/audreyr/cookiecutter
-.. _grid: https://www.djangopackages.com/grids/g/cookiecutter/
-
-Or Submit a Pull Request
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-I also accept pull requests on this, if they're small, atomic, and if they make my own project development
-experience better.
+This is what I want. *It might not be what you want.*  I also accept pull requests on this,
+if they're small, atomic, and if they make my own project development experience better.
+Otherwise, just fork it :)
