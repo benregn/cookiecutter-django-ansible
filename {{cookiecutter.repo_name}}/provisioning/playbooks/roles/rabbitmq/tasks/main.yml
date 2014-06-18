@@ -40,6 +40,13 @@
   tags:
     - rabbitmq
 
+- name: copy rabbitmq.config file
+  copy: >
+    src=rabbitmq.config
+    dest=/etc/rabbitmq/rabbitmq.config
+  tags:
+    - rabbitmq
+
 - name: ensure rabbitmq is started
   service: >
     name=rabbitmq-server
