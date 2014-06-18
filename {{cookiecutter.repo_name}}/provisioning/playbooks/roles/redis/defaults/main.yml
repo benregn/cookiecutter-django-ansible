@@ -1,6 +1,7 @@
 ---
 redis_package: 'redis-server'
 redis_service: 'redis-server'
+install_redmon: False
 redmon_service: 'redmon'
 redmon_dependencies:
     - ruby1.9.1-full

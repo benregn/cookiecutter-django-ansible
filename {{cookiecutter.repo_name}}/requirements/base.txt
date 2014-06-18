@@ -26,6 +26,8 @@ django-allauth==0.16.1
 # For the persistance stores
 psycopg2==2.5.3
 
+redis==2.10.1
+
 # Unicode slugification
 unicode-slugify==0.1.1
 django-autoslug==1.7.2

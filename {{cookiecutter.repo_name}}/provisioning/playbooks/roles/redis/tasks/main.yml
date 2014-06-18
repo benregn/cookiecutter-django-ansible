@@ -33,21 +33,21 @@
     cache_valid_time={{six_hours}}
     state=installed
   with_items: redmon_dependencies
+  when: install_redmon
   tags:
     - redis
-    - redmon
 
 - name: set Ruby 1.9.1 (ABI version) as default
   command: update-alternatives --set ruby /usr/bin/ruby1.9.1
+  when: install_redmon
   tags:
     - redis
-    - redmon
 
 - name: set gem to corresponding Ruby version
   command: update-alternatives --set gem /usr/bin/gem1.9.1
+  when: install_redmon
   tags:
     - redis
-    - redmon
 
 - name: install gems requered for Redmon
   gem: >
@@ -57,25 +57,24 @@
   sudo: False
   tags:
     - redis
-    - redmon
 
 - name: "link {{redmon_service}} to /usr/local/bin"
   file: >
     src=/home/vagrant/.gem/ruby/1.9.1/bin/redmon
     dest=/usr/local/bin/redmon
     state=link
+  when: install_redmon
   tags:
     - redis
-    - redmon
 
 # - name: Redmon supervisord conf file
 #   template: src=redmon.j2 dest=/etc/supervisor/{{redmon_service}}.conf  owner=root group=root mode='755'
+#   when: install_redmon
 #   tags:
 #     - redis
-#     - redmon
 
 # - name: ensure Redmon server is running
 #   supervisorctl: name={{redmon_service}} state=started
+#   when: install_redmon
 #   tags:
-#     - redis
-#     - redmon{% endraw %}
+#     - redis{% endraw %}
