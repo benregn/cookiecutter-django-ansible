@@ -9,4 +9,6 @@
     - { role: supervisor }
     - { role: uwsgi }
     - { role: nginx }
+    - { role: rabbitmq }
+    - { role: celery }
     - { role: deploy }
