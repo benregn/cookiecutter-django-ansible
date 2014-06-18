@@ -21,8 +21,6 @@
   file: >
     path=/etc/nginx/sites-enabled/default
     state=absent
-  notify:
-    - restart nginx
   tags:
     - nginx
 
@@ -31,8 +29,6 @@
     src=nginx.j2
     dest=/etc/nginx/nginx.conf
     validate="nginx -t -c %s"
-  notify:
-    - restart nginx
   tags:
     - nginx
 
@@ -48,7 +44,15 @@
     src=/etc/nginx/sites-available/{{project_name}}.conf
     dest=/etc/nginx/sites-enabled/{{project_name}}.conf
     state=link
-  notify:
-    - restart nginx
+  tags:
+    - nginx
+
+- name: stop nginx
+  service: name=nginx state=stopped
+  tags:
+    - nginx
+
+- name: start nginx
+  service: name=nginx state=started
   tags:
     - nginx{% endraw %}
