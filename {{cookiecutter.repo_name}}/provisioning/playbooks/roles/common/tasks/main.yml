@@ -17,6 +17,14 @@
   tags:
     - setup
 
+- name: remove chef and puppet
+  apt: >
+    pkg={{item}}
+    state=absent
+  with_items: other_provisioners
+  tags:
+    - setup
+
 - name: remove sudo group rights
   lineinfile: >
     dest=/etc/sudoers

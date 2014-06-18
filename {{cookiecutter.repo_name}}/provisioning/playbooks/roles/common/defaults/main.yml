@@ -8,3 +8,9 @@ common_pkg:
   - fail2ban
   - htop
   - mercurial
+  - vim
+other_provisioners:
+  - chef
+  - chef-zero
+  - puppet
+  - puppet-common
