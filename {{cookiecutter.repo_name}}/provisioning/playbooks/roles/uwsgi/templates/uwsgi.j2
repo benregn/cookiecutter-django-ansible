@@ -13,17 +13,24 @@ processes = {{ ansible_processor_cores }}
 # Kill unresponsive process after X sec
 harakiri = 30
 
-# reload workers after the specified amount of managed requests
-max-requests = 5000
+# reload workers after the specified amount of time in seconds
+# default 3 hours, 3*60*60 = 10800
+max-worker-lifetime = 10800
 
 # the socket
 socket = 127.0.0.1:8001
 
+# run the stats server
+stats = 127.0.0.1:1700
+
+# show memery usages per request in logs
+memory-report = true
+
 # with appropriate permissions
-chmod-socket = 644
+# chmod-socket = 644
+# chown-socket = www-data
 uid = www-data
 gid = www-data
-chown-socket = www-data
 
 # the base directory
 chdir = {{ django_root_dir }}
