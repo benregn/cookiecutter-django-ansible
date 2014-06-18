@@ -1,6 +1,6 @@
 {% raw %}[program:celeryd]
-command={{ virtualenv_dir }}/bin/python manage.py celeryd --loglevel=INFO
-directory={{ code_root_dir }}
+command={{ virtualenv_dir }}/bin/celery -A config worker --loglevel=INFO
+directory={{ django_root_dir }}
 user={{ django_user }}
 group=www-data
 numprocs=1

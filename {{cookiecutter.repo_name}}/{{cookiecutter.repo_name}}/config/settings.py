@@ -270,6 +270,32 @@ class Common(Configuration):
     ########## END LOGGING CONFIGURATION
 
 
+    ########## CELERY CONFIGURATION
+    # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-transport
+    BROKER_TRANSPORT = 'amqp'
+
+    # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-pool-limit
+    # and https://groups.google.com/forum/#!topic/celery-users/JWnh2LFux9o
+    BROKER_POOL_LIMIT = 4
+
+    # See: http://docs.celeryproject.org/en/latest/configuration.html#celery-redirect-stdouts-level
+    CELERY_REDIRECT_STDOUTS_LEVEL = 'DEBUG'
+
+    # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-url
+    BROKER_URL = values.Value(environ_name='RABBITMQ_URL', environ_prefix=None)
+
+    # See: http://docs.celeryproject.org/en/latest/configuration.html#celery-result-backend
+    CELERY_RESULT_BACKEND = 'amqp'
+
+    # See: http://celery.readthedocs.org/en/latest/configuration.html#celery-task-result-expires
+    CELERY_TASK_RESULT_EXPIRES = 21600  # 6 hours
+
+    # See: http://docs.celeryproject.org/en/latest/userguide/security.html#serializers
+    # and: http://docs.celeryproject.org/en/latest/configuration.html#std:setting-CELERY_ACCEPT_CONTENT
+    CELERY_ACCEPT_CONTENT = ['pickle', 'json']
+    ########## END CELERY CONFIGURATION
+
+
     ########## Your common stuff: Below this line define 3rd party libary settings
 
 

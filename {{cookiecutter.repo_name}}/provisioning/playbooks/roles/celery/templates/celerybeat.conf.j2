@@ -1,6 +1,6 @@
 {% raw %}[program:celerybeat]
-command={{ virtualenv_dir }}/bin/python manage.py celerybeat --schedule=celerybeat-schedule --loglevel=INFO
-directory={{ code_root_dir }}
+command={{ virtualenv_dir }}/bin/celery beat -A config --schedule=celerybeat-schedule --loglevel=INFO
+directory={{ django_root_dir }}
 user={{ django_user }}
 
 group=www-data
