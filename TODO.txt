@@ -1,0 +1,3 @@
+Include redis config file
+Add password to redis
+Figure out rabbitmq note naming
