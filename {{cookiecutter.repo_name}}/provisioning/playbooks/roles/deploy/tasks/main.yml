@@ -71,4 +71,13 @@
     - celeryd
   sudo: True
   tags:
+    - deploy
+
+- name: restart runserver_plus processes
+  supervisorctl: >
+    name=runserver_plus
+    state=restarted
+  when: not is_production
+  sudo: True
+  tags:
     - deploy{% endraw %}

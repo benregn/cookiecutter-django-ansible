@@ -1,0 +1,16 @@
+[program:runserver_plus]
+command={{ virtualenv_dir }}/bin/dj runserver_plus 0.0.0.0:8000 --verbosity=3 --print-sql --threaded
+directory={{ django_root_dir }}
+user={{ django_user }}
+group=www-data
+numprocs=1
+
+redirect_stderr=true
+stdout_logfile=/var/log/supervisor/runserver_plus.log
+stdout_logfile_maxbytes=10MB
+stdout_logfile_backups=3
+
+autostart=true
+autorestart=true
+
+environment={% for key, value in env_vars.items() %}{{ key }}="{{ value }}"{% if not loop.last %},{% endif %}{% endfor %}
