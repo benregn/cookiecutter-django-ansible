@@ -84,7 +84,7 @@
     read_priv=.*
     write_priv=.*
     vhost=/{{project_name}}
-    tags={{project_name}}
+    tags={{project_name}},monitoring
     node={{rabbit_node}}
     state=present
   tags:
