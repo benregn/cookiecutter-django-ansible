@@ -24,12 +24,26 @@
   tags:
     - rabbitmq
 
+- name: ensure rabbitmq is stopped
+  service: >
+    name=rabbitmq-server
+    state=stopped
+  tags:
+    - rabbitmq
+
 - name: enable rabbitmq plugins
   rabbitmq_plugin: >
     names=rabbitmq_management,rabbitmq_tracing
     state=enabled
   notify:
   - restart rabbitmq
+  tags:
+    - rabbitmq
+
+- name: ensure rabbitmq is started
+  service: >
+    name=rabbitmq-server
+    state=started
   tags:
     - rabbitmq
 
