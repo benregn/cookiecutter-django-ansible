@@ -34,7 +34,7 @@
 
 - name: "copy public ssh key over for {{django_user}}"
   copy: >
-    src=../keys/key.pub
+    src={{ public_ssh_key_path }}
     dest=/home/{{django_user}}/.ssh/id_rsa.pub
     mode=644
     owner={{django_user}}
@@ -44,7 +44,7 @@
 
 - name: "copy private ssh key over for {{django_user}}"
   copy: >
-    src=../keys/key
+    src={{ private_ssh_key_path }}
     dest=/home/{{django_user}}/.ssh/id_rsa
     mode=600
     owner={{django_user}}
@@ -57,7 +57,7 @@
     user={{ django_user }}
     key="{{ item }}"
   with_file:
-    - ../../../../keys/key.pub
+    - "{{ public_ssh_key_path }}"
   tags:
     - setup
 

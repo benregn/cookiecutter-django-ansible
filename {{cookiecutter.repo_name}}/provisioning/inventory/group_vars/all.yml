@@ -5,6 +5,9 @@ git_repo: git@github.com:username/{{cookiecutter.repo_name}}.git
 git_name: {{cookiecutter.author_name}}
 git_email: {{cookiecutter.email}}
 
+private_ssh_key_path: {{cookiecutter.private_ssh_key_path}}
+public_ssh_key_path: {{cookiecutter.public_ssh_key_path}}
+
 django_user: django
 # crypted password, generated on a Linux box using: echo 'import crypt,getpass; print crypt.crypt(getpass.getpass(), "$6$AC3bdCF7!$")' | python -
 # default pass: django

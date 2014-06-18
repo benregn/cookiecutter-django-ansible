@@ -6,5 +6,7 @@
     "description": "A short description of the project.",
     "year": "2014",
     "domain_name": "example.com",
+    "public_ssh_key_path": "~/.ssh/id_rsa.pub",
+    "private_ssh_key_path": "~/.ssh/id_rsa",
     "version": "0.1.0"
 }
