@@ -54,6 +54,7 @@
     name={{item}}
     state=present
   with_items: redmon_gems
+  when: install_redmon
   sudo: False
   tags:
     - redis
