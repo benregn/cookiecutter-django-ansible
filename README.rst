@@ -121,7 +121,11 @@ When you got ansible installled, you can run::
 
     $ vagrant up
 
-And wait until ansible finishes provisioning the VM.
+When ansible finishes provisioning the VM, you should have a dev server running at `127.0.0.1:8000`_
+and uwsgi/nginx server at `localhost:8080`_.
+
+.. _127.0.0.1:8000: http://127.0.0.1:8000/
+.. _localhost:8080: http://localhost:8080/
 
 .. **Live reloading and Sass CSS compilation**
 
