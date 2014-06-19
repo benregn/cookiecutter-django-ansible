@@ -73,6 +73,14 @@
   tags:
     - deploy
 
+- name: add runserver_plus.conf to supervisor
+  template: >
+    src=runserver_plus.conf.j2
+    dest=/etc/supervisor/runserver_plus.conf
+  when: not is_production
+  tags:
+    - deploy
+
 - name: restart runserver_plus processes
   supervisorctl: >
     name=runserver_plus
