@@ -17,7 +17,7 @@ Features
 * Basic caching setup
 * Grunt build for compass and livereload
 * Vagrant development environment
-* Ready to deploy to `Digital Ocean`_
+* (Almost) ready to deploy to `Digital Ocean`_
 .. * Basic e-mail configurations for send emails via SendGrid_
 
 .. _Bootstrap: https://github.com/twbs/bootstrap
@@ -63,18 +63,22 @@ It prompts you for questions. Answer them::
     remote: Total 550 (delta 283), reused 479 (delta 222)
     Receiving objects: 100% (550/550), 127.66 KiB | 58 KiB/s, done.
     Resolving deltas: 100% (283/283), done.
-    project_name (default is "project_name")? Reddit Clone
-    repo_name (default is "repo_name")? redditclone
+
+    project_name (default is "project_name is the title of the project.")? Reddit clone
+    repo_name (default is "repo_name is used for describing the directory structure.")? reddit_clone
     author_name (default is "Your Name")? Tomas Thor Jonsson
     email (default is "Your email")? benregn@gmail.com
     description (default is "A short description of the project.")? A reddit clone.
-    year (default is "Current year")? 2014
+    year (default is "2014")?
     domain_name (default is "example.com")?
+    public_ssh_key_path (default is "~/.ssh/id_rsa.pub")?
+    private_ssh_key_path (default is "~/.ssh/id_rsa")?
+    version (default is "0.1.0")?
 
 
 Enter the project and take a look around::
 
-    $ cd redditclone/
+    $ cd reddit_clone/
     $ ls
 
 Create a GitHub repo and push it there::
@@ -117,7 +121,11 @@ When you got ansible installled, you can run::
 
     $ vagrant up
 
-And wait until ansible finishes provisioning the VM.
+When ansible finishes provisioning the VM, you should have a dev server running at `127.0.0.1:8000`_
+and uwsgi/nginx server at `localhost:8080`_.
+
+.. _127.0.0.1:8000: http://127.0.0.1:8000/
+.. _localhost:8080: http://localhost:8080/
 
 .. **Live reloading and Sass CSS compilation**
 
