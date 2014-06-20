@@ -15,7 +15,7 @@
   tags:
     - python
 
-- name: install various libraries with pip
+- name: install global libraries with pip
   pip: >
     name={{item.name}}
     version={{item.version}}
