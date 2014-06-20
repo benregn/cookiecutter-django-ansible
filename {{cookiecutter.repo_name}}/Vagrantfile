@@ -22,7 +22,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder ".", "/var/www/django/", id: "django-root", group: "www-data", disabled: false, :mount_options => ["uid=1002"]
 
   config.vm.provider :virtualbox do |vb|
-    vb.customize ["modifyvm", :id, "--memory", "512"]
+    vb.memory = 512
+    vb.cpus = 1
   end
 
   config.vm.provision "ansible" do |ansible|
