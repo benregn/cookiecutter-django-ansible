@@ -5,7 +5,7 @@ root_user: root
 # postgres
 postgres_user_name: "pg_{{ project_name }}"
 postgres_db_name: "db_{{ project_name }}"
-postgres_password: "change_me"
+postgres_password: change_me
 
 # rabbitmq
 rabbitmq_user: django

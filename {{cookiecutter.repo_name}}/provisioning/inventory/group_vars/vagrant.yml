@@ -5,7 +5,7 @@ root_user: vagrant
 # postgres
 postgres_user_name: "pg_{{ project_name }}"
 postgres_db_name: "db_{{ project_name }}"
-postgres_password: "password"
+postgres_password: password
 
 # rabbitmq
 rabbitmq_user: django
