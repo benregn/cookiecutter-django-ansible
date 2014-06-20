@@ -6,12 +6,14 @@
     cache_valid_time={{six_hours}}
     state=installed
   with_items: python_dependencies
+  sudo: True
   tags:
     - python
 
 - name: install pip
   easy_install: >
     name=pip
+  sudo: True
   tags:
     - python
 
@@ -21,6 +23,7 @@
     version={{item.version}}
     state=present
   with_items: python_pip_global_packages
+  sudo: True
   tags:
     - python
 
@@ -29,6 +32,7 @@
     src=/usr/lib/x86_64-linux-gnu/libfreetype.so
     dest=/usr/lib/libfreetype.so
     state=link
+  sudo: True
   tags:
     - python
 
@@ -37,6 +41,7 @@
   file: >
     src=/usr/lib/x86_64-linux-gnu/libz.so
     dest=/usr/lib/libz.so state=link
+  sudo: True
   tags:
     - python
 {% endraw %}

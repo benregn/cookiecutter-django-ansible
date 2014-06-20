@@ -4,6 +4,7 @@
     repo=ppa:nginx/stable
     update_cache=yes
     state=present
+  sudo: True
   tags:
     - nginx
 
@@ -21,6 +22,7 @@
   file: >
     path=/etc/nginx/sites-enabled/default
     state=absent
+  sudo: True
   tags:
     - nginx
 
@@ -29,6 +31,7 @@
     src=nginx.j2
     dest=/etc/nginx/nginx.conf
     validate="nginx -t -c %s"
+  sudo: True
   tags:
     - nginx
 
@@ -36,6 +39,7 @@
   template: >
     src=nginx_vhost.j2
     dest=/etc/nginx/sites-available/{{project_name}}.conf
+  sudo: True
   tags:
     - nginx
 
@@ -44,15 +48,18 @@
     src=/etc/nginx/sites-available/{{project_name}}.conf
     dest=/etc/nginx/sites-enabled/{{project_name}}.conf
     state=link
+  sudo: True
   tags:
     - nginx
 
 - name: stop nginx
   service: name=nginx state=stopped
+  sudo: True
   tags:
     - nginx
 
 - name: start nginx
   service: name=nginx state=started
+  sudo: True
   tags:
     - nginx{% endraw %}

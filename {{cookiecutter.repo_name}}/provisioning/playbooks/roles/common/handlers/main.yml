@@ -1,3 +1,6 @@
 ---
 - name: restart ssh
-  service: name=ssh state=restarted
+  service: >
+    name=ssh
+    state=restarted
+  sudo: True
