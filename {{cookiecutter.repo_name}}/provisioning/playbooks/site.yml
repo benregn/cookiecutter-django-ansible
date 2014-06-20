@@ -1,3 +1,4 @@
 ---
+- inlcue: bootstrap_user.yml
 - include: dbservers.yml
 - include: webservers.yml

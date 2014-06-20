@@ -1,5 +1,6 @@
 ---
 fqdn: {{cookiecutter.domain_name}}
+root_user: root
 {% raw %}
 # postgres
 postgres_user_name: "pg_{{ project_name }}"

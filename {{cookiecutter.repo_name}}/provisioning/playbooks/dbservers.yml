@@ -2,6 +2,7 @@
 - hosts: dbservers
   gather_facts: no
   sudo: True
+  remote_user: "{{ django_user }}"
   roles:
     - { role: common }
     - { role: postgres }

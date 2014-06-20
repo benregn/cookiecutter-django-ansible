@@ -1,5 +1,6 @@
 ---
 fqdn: localhost
+root_user: vagrant
 {% raw %}
 # postgres
 postgres_user_name: "pg_{{ project_name }}"
