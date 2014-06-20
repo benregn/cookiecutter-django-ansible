@@ -51,13 +51,6 @@
     # - { key: 'ClientAliveCountMax', value: '1000' }
   notify:
     - restart ssh
-
-- name: add custom ssh key for root
-  authorized_key: >
-    user=root
-    key="{{ item }}"
-  with_file:
-    - "{{ public_ssh_key_path }}"
   tags:
     - setup
 
