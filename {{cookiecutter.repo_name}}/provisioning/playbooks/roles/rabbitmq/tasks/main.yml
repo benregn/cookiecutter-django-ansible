@@ -35,8 +35,6 @@
   rabbitmq_plugin: >
     names=rabbitmq_management,rabbitmq_tracing
     state=enabled
-  notify:
-  - restart rabbitmq
   tags:
     - rabbitmq
 
