@@ -1,4 +1,15 @@
 {% raw %}---
+- name: install web packages
+  apt: >
+    pkg={{item}}
+    update_cache=yes
+    cache_valid_time={{six_hours}}
+    state=installed
+  with_items: setup_pkg
+  sudo: True
+  tags:
+    - deploy
+
 - name: copy /.ssh/config
   copy: >
     src=ssh_config

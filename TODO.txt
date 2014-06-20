@@ -2,3 +2,4 @@ Include redis config file
 Add password to redis
 Figure out redmon + supervisord
 Figure out rabbitmq note naming
+Move installation of "web" packages from deploy role
