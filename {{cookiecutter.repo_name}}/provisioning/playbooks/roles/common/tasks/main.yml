@@ -65,5 +65,13 @@
   copy: >
     src=50unattended-upgrades
     dest=/etc/apt/apt.conf.d/50unattended-upgrades
+- name: "create /var/log/{{project_name}} directory"
+  file: >
+    path=/var/log/{{project_name}}
+    owner={{django_user}}
+    group=www-data
+    state=directory
+    mode=775
+  sudo: True
   tags:
     - setup{% endraw %}
