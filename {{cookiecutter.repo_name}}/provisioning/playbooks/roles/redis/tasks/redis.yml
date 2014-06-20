@@ -1,0 +1,30 @@
+{% raw %}---
+- name: "install Redis server: {{redis_package}}"
+  apt: >
+    pkg={{redis_package}}
+    update_cache=yes
+    cache_valid_time={{six_hours}}
+    state=installed
+  sudo: True
+  tags:
+    - redis
+
+- name: bind Redis server to all interfaces
+  lineinfile: >
+    dest=/etc/redis/redis.conf
+    regexp="^#?bind"
+    line="#bind 127.0.0.1"
+    state=present
+  notify:
+    - restart Redis
+  sudo: True
+  tags:
+    - redis
+
+- name: ensure Redis server is running
+  service: >
+    name={{redis_package}}
+    state=started
+  sudo: True
+  tags:
+    - redis{% endraw %}
