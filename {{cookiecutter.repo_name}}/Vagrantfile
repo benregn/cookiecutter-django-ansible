@@ -36,6 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           ansible.inventory_path = "provisioning/inventory/local"
           ansible.limit = 'all'
           ansible.ask_sudo_pass = true
+          ansible.host_key_checking = false
           # ansible.verbose = 'vvvv'
           # ansible.tags = ['tag_name', 'another_tag']
         end

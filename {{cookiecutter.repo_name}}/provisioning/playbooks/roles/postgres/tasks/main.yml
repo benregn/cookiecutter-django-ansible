@@ -41,8 +41,8 @@
 #   tags:
 #     - postgres
 
-- name: update postgres client configuration
-  copy: >
+- name: update postgres pg_hba.conf
+  template: >
     src=pg_hba.conf
     dest=/etc/postgresql/9.3/main/pg_hba.conf
   sudo: True
