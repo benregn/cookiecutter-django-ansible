@@ -36,6 +36,7 @@
     owner={{ django_user }}
     group=www-data
     state=directory
+  sudo: True
   tags:
     - deploy
 
@@ -89,6 +90,7 @@
     src=runserver_plus.conf.j2
     dest=/etc/supervisor/runserver_plus.conf
   when: not is_production
+  sudo: True
   tags:
     - deploy
 
