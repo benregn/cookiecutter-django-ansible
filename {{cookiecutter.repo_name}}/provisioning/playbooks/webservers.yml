@@ -1,4 +1,4 @@
----
+{% raw %}---
 - hosts: webservers
   gather_facts: yes
   remote_user: "{{ django_user }}"
@@ -12,3 +12,4 @@
     - { role: rabbitmq }
     - { role: celery }
     - { role: deploy }
+{% endraw %}
