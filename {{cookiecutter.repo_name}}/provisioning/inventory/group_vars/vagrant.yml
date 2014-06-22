@@ -11,7 +11,7 @@ postgres_password: password
 # rabbitmq
 rabbitmq_user: django
 rabbitmq_password: changeme
-rabbit_node: rabbit@{{cookiecutter.repo_name}}
+rabbit_node: rabbit@web
 
 reqs_file: local.txt
 

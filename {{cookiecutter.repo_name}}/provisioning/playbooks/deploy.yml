@@ -2,4 +2,4 @@
 - hosts: webservers
   gather_facts: no
   roles:
-    - deploy
+    - { role: deploy }

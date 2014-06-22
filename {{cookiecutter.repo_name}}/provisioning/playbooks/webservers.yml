@@ -11,5 +11,4 @@
     - { role: redis }
     - { role: rabbitmq }
     - { role: celery }
-    - { role: deploy }
 {% endraw %}

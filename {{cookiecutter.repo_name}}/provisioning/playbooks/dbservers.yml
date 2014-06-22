@@ -1,6 +1,6 @@
 {% raw %}---
 - hosts: dbservers
-  gather_facts: no
+  gather_facts: yes
   remote_user: "{{ django_user }}"
   roles:
     - { role: common }

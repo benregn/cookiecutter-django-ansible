@@ -8,31 +8,44 @@ end
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  # Using Vagrant Cloud
-  # https://vagrantcloud.com/ubuntu/trusty64
-  config.vm.box = "ubuntu/trusty64"
-  config.vm.hostname = "{{cookiecutter.repo_name}}"
+  vms = {
+    :db => "192.168.99.22",
+    :web => "192.168.99.11"
+  }
 
-  # config.ssh.forward_agent = true
-  config.vm.network :forwarded_port, guest: 80, host: 8080
-  config.vm.network :forwarded_port, guest: 4567, host: 4567, id: "redmon"
-  config.vm.network :forwarded_port, guest: 8000, host: 8000, id: "django"
-  config.vm.network :forwarded_port, guest: 15672, host: 15672, id: "rabbitmq-management"
+  vms.each_with_index do |(server_name, ip), index|
+    config.vm.define server_name do |node|
+      # Using Vagrant Cloud
+      # https://vagrantcloud.com/ubuntu/trusty64
+      node.vm.box = "ubuntu/trusty64"
+      node.vm.host_name = server_name.to_s
+      node.vm.network "private_network", ip: ip
 
-  config.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
-  config.vm.synced_folder ".", "/var/www/django/", id: "django-root", group: "www-data", disabled: false, :mount_options => ["uid=1002"]
+      # activate port forwarding and start provisioning on the last vm
+      if vms.length - 1 == index
+        node.vm.network :forwarded_port, guest: 80, host: 8080
+        node.vm.network :forwarded_port, guest: 4567, host: 4567, id: "redmon"
+        node.vm.network :forwarded_port, guest: 8000, host: 8000, id: "django"
+        node.vm.network :forwarded_port, guest: 15672, host: 15672, id: "rabbitmq-management"
+
+        node.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
+        node.vm.synced_folder ".", "/var/www/django/", id: "django-root", group: "www-data", disabled: false, :mount_options => ["uid=1002"]
+
+        node.vm.provision "ansible" do |ansible|
+          ansible.playbook = "provisioning/playbooks/site.yml"
+          ansible.inventory_path = "provisioning/inventory/local"
+          ansible.limit = 'all'
+          ansible.ask_sudo_pass = true
+          # ansible.verbose = 'vvvv'
+          # ansible.tags = ['tag_name', 'another_tag']
+        end
+      end
+    end
+  end
 
   config.vm.provider :virtualbox do |vb|
     vb.memory = 512
     vb.cpus = 1
   end
 
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provisioning/playbooks/site.yml"
-    ansible.inventory_path = "provisioning/inventory/local"
-    ansible.limit = 'all'
-    ansible.ask_sudo_pass = true
-    # ansible.verbose = 'vvvv'
-    # ansible.tags = ['tag_name', 'another_tag']
-  end
 end
