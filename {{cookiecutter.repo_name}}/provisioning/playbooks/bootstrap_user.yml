@@ -1,6 +1,6 @@
 {% raw %}---
 - hosts: all
-  gather_facts: no
+  gather_facts: yes
   sudo: True
   remote_user: "{{ root_user }}"
   roles:
