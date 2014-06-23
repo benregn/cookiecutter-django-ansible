@@ -5,6 +5,7 @@
     dest=/etc/supervisor/celeryd.conf
   notify:
     - restart supervisord
+  sudo: True
   tags:
     - celery
 
@@ -14,5 +15,6 @@
     dest=/etc/supervisor/celerybeat.conf
   notify:
     - restart supervisord
+  sudo: True
   tags:
     - celery

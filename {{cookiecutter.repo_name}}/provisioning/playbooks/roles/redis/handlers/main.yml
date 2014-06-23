@@ -1,10 +1,9 @@
 {% raw %}---
 - name: restart Redis
-  service: name={{redis_service}} state=restarted
+  service: >
+    name={{redis_service}}
+    state=restarted
+  sudo: True
   tags:
     - redis
-
-- name: restart Redmon
-  service: name={{redmon_service}} state=restarted
-  tags:
-    - redis{% endraw %}
+{% endraw %}

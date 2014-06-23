@@ -36,18 +36,14 @@
 # - name: update postgres db configuration
 #   copy: src=postgresql.conf dest=/etc/postgresql/9.3/main/postgresql.conf
 #   sudo: True
-#   notify:
-#     - restart postgresql
 #   tags:
 #     - postgres
 
-- name: update postgres client configuration
-  copy: >
+- name: update postgres pg_hba.conf
+  template: >
     src=pg_hba.conf
     dest=/etc/postgresql/9.3/main/pg_hba.conf
   sudo: True
-  notify:
-    - restart postgresql
   tags:
     - postgres
 
@@ -59,10 +55,14 @@
     state=present
     backup=yes
   sudo: True
-  notify:
-    - restart postgresql
   tags:
     - postgres
+
+- name: ensure postgres is restarted
+  service: >
+    name=postgresql
+    state=restarted
+  sudo: True
 
 - name: create a postgres user
   postgresql_user: >

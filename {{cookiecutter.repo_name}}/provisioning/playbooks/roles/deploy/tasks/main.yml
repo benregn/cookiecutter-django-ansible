@@ -1,10 +1,22 @@
 {% raw %}---
+- name: install web packages
+  apt: >
+    pkg={{item}}
+    update_cache=yes
+    cache_valid_time={{six_hours}}
+    state=installed
+  with_items: setup_pkg
+  sudo: True
+  tags:
+    - deploy
+
 - name: copy /.ssh/config
   copy: >
     src=ssh_config
     dest=/home/{{ django_user }}/.ssh/config
     owner={{django_user}}
     group={{django_user}}
+  sudo: True
   tags:
     - deploy
 
@@ -15,6 +27,7 @@
     owner={{ django_user }}
     group=www-data
     state=directory
+  sudo: True
   tags:
     - deploy
 
@@ -25,6 +38,7 @@
     owner={{ django_user }}
     group=www-data
     state=directory
+  sudo: True
   tags:
     - deploy
 
@@ -78,6 +92,7 @@
     src=runserver_plus.conf.j2
     dest=/etc/supervisor/runserver_plus.conf
   when: not is_production
+  sudo: True
   tags:
     - deploy
 

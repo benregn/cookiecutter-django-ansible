@@ -1,8 +1,9 @@
 [digital_ocean]
-{{cookiecutter.domain_name}}
+web    ansible_ssh_host=180.104.43.11
+db     ansible_ssh_host=180.103.99.22
 
-[webservers:children]
-digital_ocean
+[webservers]
+web
 
-[dbservers:children]
-digital_ocean
+[dbservers]
+db

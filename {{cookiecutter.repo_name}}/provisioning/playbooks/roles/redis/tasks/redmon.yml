@@ -1,0 +1,50 @@
+{% raw %}---
+- name: install Redmon dependencies
+  apt: >
+    pkg={{item}}
+    update_cache=yes
+    cache_valid_time={{six_hours}}
+    state=installed
+  with_items: redmon_dependencies
+  sudo: True
+  tags:
+    - redis
+
+- name: install gems requered for Redmon
+  gem: >
+    name={{item}}
+    user_install=no
+    state=present
+  with_items: redmon_gems
+  sudo: False
+  sudo: True
+  tags:
+    - redis
+
+- name: "link {{redmon_service}} to /usr/local/bin"
+  file: >
+    src=/home/{{django_user}}/.gem/ruby/1.9.1/bin/redmon
+    dest=/usr/local/bin/redmon
+    state=link
+  sudo: True
+  tags:
+    - redis
+
+# - name: Redmon supervisord conf file
+#   template: >
+#     src=redmon.j2
+#     dest=/etc/supervisor/{{redmon_service}}.conf
+#     owner=root
+#     group=root
+#     mode='755'
+#   sudo: True
+#   tags:
+#     - redis
+
+# - name: ensure Redmon server is running
+#   supervisorctl:
+#     name={{redmon_service}}
+#     state=started
+#   sudo: True
+#   tags:
+#     - redis{% endraw %}

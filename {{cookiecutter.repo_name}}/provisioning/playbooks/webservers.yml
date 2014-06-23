@@ -1,15 +1,13 @@
----
+{% raw %}---
 - hosts: webservers
   gather_facts: yes
-  sudo: True
+  remote_user: "{{ django_user }}"
   roles:
-    - { role: common }
     - { role: python }
-    - { role: django }
     - { role: supervisor }
     - { role: uwsgi }
     - { role: nginx }
     - { role: redis }
     - { role: rabbitmq }
     - { role: celery }
-    - { role: deploy }
+{% endraw %}

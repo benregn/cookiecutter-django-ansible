@@ -5,6 +5,7 @@
     version={{ item.version }}
     state=present
   with_items: supervisor_package
+  sudo: True
   tags:
     - supervisor
 
@@ -14,6 +15,7 @@
     dest={{supervisor_conf_location}}
   notify:
     - restart supervisord
+  sudo: True
   tags:
     - supervisor
 
@@ -21,6 +23,7 @@
   file: >
     path=/etc/supervisor
     state=directory
+  sudo: True
   tags:
     - supervisor
 
@@ -28,6 +31,7 @@
   file: >
     path=/var/log/supervisor
     state=directory
+  sudo: True
   tags:
     - supervisor
 
@@ -40,6 +44,7 @@
     force=yes
     mode=755
   notify: restart supervisord
+  sudo: True
   tags:
     - supervisor
 
@@ -47,6 +52,7 @@
   command: update-rc.d supervisord defaults
   notify:
     - restart supervisord
+  sudo: True
   tags:
     - supervisor
 
@@ -54,5 +60,6 @@
   service: >
     name=supervisord
     state=started
+  sudo: True
   tags:
     - supervisor{% endraw %}

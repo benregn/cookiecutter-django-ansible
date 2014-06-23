@@ -79,16 +79,6 @@
   tags:
     - setup
 
-- name: install web packages
-  apt: >
-    pkg={{item}}
-    update_cache=yes
-    cache_valid_time={{six_hours}}
-    state=installed
-  with_items: setup_pkg
-  tags:
-    - setup
-
 - name: "create /var/log/{{project_name}} directory"
   file: >
     path=/var/log/{{project_name}}

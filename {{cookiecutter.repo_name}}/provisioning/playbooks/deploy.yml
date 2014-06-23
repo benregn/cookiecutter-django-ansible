@@ -1,5 +1,7 @@
----
+{% raw %}---
 - hosts: webservers
   gather_facts: no
+  remote_user: "{{ django_user }}"
   roles:
-    - deploy
+    - { role: deploy }
+{% endraw %}

@@ -5,6 +5,7 @@
     owner=www-data
     group=www-data
     state=directory
+  sudo: True
   tags:
     - uwsgi
 
@@ -14,6 +15,7 @@
     dest=/etc/uwsgi/vassals/{{project_name}}.ini
     owner=www-data
     group=www-data
+  sudo: True
   tags:
     - uwsgi
 
@@ -23,5 +25,6 @@
     dest=/etc/supervisor/{{project_name}}.conf
   notify:
     - restart supervisord
+  sudo: True
   tags:
     - uwsgi{% endraw %}

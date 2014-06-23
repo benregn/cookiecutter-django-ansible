@@ -1,9 +1,9 @@
 {% raw %}---
 - name: add rabbitmq signing key
-  sudo: True
   apt_key: >
     url=http://www.rabbitmq.com/rabbitmq-signing-key-public.asc
     state=present
+  sudo: True
   tags:
     - rabbitmq
 
@@ -12,6 +12,7 @@
     repo='deb http://www.rabbitmq.com/debian/ testing main'
     update_cache=yes
     state=present
+  sudo: True
   tags:
     - rabbitmq
 
@@ -21,6 +22,7 @@
     update_cache=yes
     cache_valid_time={{six_hours}}
     state=installed
+  sudo: True
   tags:
     - rabbitmq
 
@@ -28,6 +30,7 @@
   service: >
     name=rabbitmq-server
     state=stopped
+  sudo: True
   tags:
     - rabbitmq
 
@@ -35,8 +38,7 @@
   rabbitmq_plugin: >
     names=rabbitmq_management,rabbitmq_tracing
     state=enabled
-  notify:
-  - restart rabbitmq
+  sudo: True
   tags:
     - rabbitmq
 
@@ -44,6 +46,7 @@
   copy: >
     src=rabbitmq.config
     dest=/etc/rabbitmq/rabbitmq.config
+  sudo: True
   tags:
     - rabbitmq
 
@@ -51,6 +54,7 @@
   service: >
     name=rabbitmq-server
     state=started
+  sudo: True
   tags:
     - rabbitmq
 
@@ -59,6 +63,7 @@
     name=/{{project_name}}
     node={{rabbit_node}}
     state=present
+  sudo: True
   tags:
     - rabbitmq
 
@@ -73,6 +78,7 @@
     read_priv=.*
     node={{rabbit_node}}
     state=present
+  sudo: True
   tags:
     - rabbitmq
 
@@ -87,6 +93,7 @@
     tags={{project_name}},monitoring
     node={{rabbit_node}}
     state=present
+  sudo: True
   tags:
     - rabbitmq
 
@@ -95,6 +102,7 @@
     user=guest
     node={{rabbit_node}}
     state=absent
+  sudo: True
   tags:
     - rabbitmq
 {% endraw %}
