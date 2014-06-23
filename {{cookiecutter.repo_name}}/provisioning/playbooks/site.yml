@@ -1,4 +1,5 @@
 ---
+- include: common.yml
 - include: dbservers.yml
 - include: webservers.yml
 - include: deploy.yml

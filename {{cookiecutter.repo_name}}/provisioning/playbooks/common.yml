@@ -1,7 +1,7 @@
 {% raw %}---
-- hosts: dbservers
+- hosts: all
   gather_facts: yes
   remote_user: "{{ django_user }}"
   roles:
-    - { role: postgres }
+    - { role: common }
 {% endraw %}
