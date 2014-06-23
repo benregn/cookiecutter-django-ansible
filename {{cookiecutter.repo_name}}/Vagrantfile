@@ -32,6 +32,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         node.vm.synced_folder ".", "/var/www/django/", id: "django-root", group: "www-data", disabled: false, :mount_options => ["uid=1002"]
 
         node.vm.provision "ansible" do |ansible|
+          ansible.playbook = "provisioning/playbooks/bootstrap_user.yml"
+          ansible.inventory_path = "provisioning/inventory/local"
+          ansible.limit = 'all'
+          ansible.host_key_checking = false
+          # ansible.verbose = 'vvvv'
+        end
+
+        node.vm.provision "ansible" do |ansible|
           ansible.playbook = "provisioning/playbooks/site.yml"
           ansible.inventory_path = "provisioning/inventory/local"
           ansible.limit = 'all'
