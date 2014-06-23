@@ -16,6 +16,7 @@
     dest=/home/{{ django_user }}/.ssh/config
     owner={{django_user}}
     group={{django_user}}
+  sudo: True
   tags:
     - deploy
 
@@ -26,6 +27,7 @@
     owner={{ django_user }}
     group=www-data
     state=directory
+  sudo: True
   tags:
     - deploy
 
