@@ -6,6 +6,8 @@ root_user: root
 postgres_user_name: "pg_{{ project_name }}"
 postgres_db_name: "db_{{ project_name }}"
 postgres_password: change_me
+postgres_ip: "{{ hostvars[groups['dbservers'][0]].ansible_eth1.ipv4.address }}"
+
 
 # rabbitmq
 rabbitmq_user: django
@@ -20,6 +22,6 @@ env_vars:
   DJANGO_SECRET_KEY: YOU_HAVE_TO_CHANGE_ME!!!
   DJANGO_SETTINGS_MODULE: config.settings
   DJANGO_CONFIGURATION: Production
-  DATABASE_URL: "postgres://{{ postgres_user_name }}:{{ postgres_password }}@localhost:5432/{{ postgres_db_name }}"
+  DATABASE_URL: "postgres://{{ postgres_user_name }}:{{ postgres_password }}@{{ postgres_ip }}:5432/{{ postgres_db_name }}"
   RABBITMQ_URL: "amqp://{{ rabbitmq_user }}:{{ rabbitmq_password }}@localhost:5672//{{ project_name }}"
 {% endraw %}
