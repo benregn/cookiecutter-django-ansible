@@ -11,8 +11,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Using Vagrant Cloud
   # https://vagrantcloud.com/ubuntu/trusty64
   config.vm.box = "ubuntu/trusty64"
+  config.vm.hostname = "web"
 
   # config.ssh.forward_agent = true
+  config.vm.network "private_network", ip: "192.168.88.99"
   config.vm.network :forwarded_port, guest: 80, host: 8080
   config.vm.network :forwarded_port, guest: 4567, host: 4567, id: "redmon"
   config.vm.network :forwarded_port, guest: 8000, host: 8000, id: "django"
@@ -27,10 +29,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "provisioning/playbooks/bootstrap_user.yml"
+    ansible.inventory_path = "provisioning/inventory/vagrant_single"
+    ansible.limit = 'all'
+    ansible.host_key_checking = false
+    # ansible.verbose = 'vvvv'
+  end
+
+  config.vm.provision "ansible" do |ansible|
     ansible.playbook = "provisioning/playbooks/site.yml"
     ansible.inventory_path = "provisioning/inventory/vagrant_single"
     ansible.limit = 'all'
-    ansible.extra_vars = { ansible_ssh_user: 'vagrant' }
+    ansible.ask_sudo_pass = true
+    ansible.host_key_checking = false
     # ansible.verbose = 'vvvv'
+    ansible.tags = ['deploy', 'setup']
   end
 end
