@@ -1,8 +1,8 @@
 {% raw %}[program:runserver_plus]
-command={{ virtualenv_dir }}/bin/dj runserver_plus 0.0.0.0:8000 --verbosity=3 --print-sql --threaded
+command=/usr/local/bin/rs
 directory={{ django_root_dir }}
 user={{ django_user }}
-group=www-data
+group={{ django_user }}
 numprocs=1
 
 redirect_stderr=true
@@ -13,4 +13,5 @@ stdout_logfile_backups=3
 autostart=true
 autorestart=true
 
-environment={% for key, value in env_vars.items() %}{{ key }}="{{ value }}"{% if not loop.last %},{% endif %}{% endfor %}{% endraw %}
+environment={% for key, value in env_vars.items() %}{{ key }}="{{ value }}"{% if not loop.last %},{% endif %}{% endfor %}
+{% endraw %}

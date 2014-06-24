@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+function start_runserver_plus() {
+    {{ virtualenv_dir }}/bin/python manage.py runserver_plus 0.0.0.0:8000 --traceback -v 3 --threaded
+}
+
+function rs() {
+    # lsof -i :8000 lists processes using the 8000 port, -t option returns only the process ID
+    d_pid=`lsof -t -i :8000`
+    if [[ $d_pid ]]; then
+        echo "something is using 8000... Killing it!"
+        kill -9 $d_pid
+        echo "starting server..."
+        start_runserver_plus
+    else
+        echo "nothing to kill... starting server..."
+        start_runserver_plus
+    fi
+}
+rs

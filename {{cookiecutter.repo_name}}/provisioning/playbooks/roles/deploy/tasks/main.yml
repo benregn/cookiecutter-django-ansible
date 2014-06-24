@@ -87,6 +87,18 @@
   tags:
     - deploy
 
+- name: copy custom runserver_plus script
+  template: >
+    src=rs.j2
+    dest=/usr/local/bin/rs
+    owner={{django_user}}
+    group={{django_user}}
+    mode=755
+  when: not is_production
+  sudo: True
+  tags:
+    - deploy
+
 - name: add runserver_plus.conf to supervisor
   template: >
     src=runserver_plus.conf.j2
