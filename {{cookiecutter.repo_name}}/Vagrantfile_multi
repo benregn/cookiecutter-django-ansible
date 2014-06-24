@@ -23,7 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       # activate port forwarding and start provisioning on the last vm
       if vms.length - 1 == index
-        node.vm.network :forwarded_port, guest: 80, host: 8080
+        node.vm.network :forwarded_port, guest: 80, host: 8080, id: "nginx"
         node.vm.network :forwarded_port, guest: 4567, host: 4567, id: "redmon"
         node.vm.network :forwarded_port, guest: 8000, host: 8000, id: "django"
         node.vm.network :forwarded_port, guest: 15672, host: 15672, id: "rabbitmq-management"
