@@ -96,6 +96,16 @@ Getting up and running
 
 The steps below will get you up and running with a local development environment.
 
+**Install VirtualBox and Vagrant**
+
+To get a local development machine running, you'll need VirtualBox and Vagrant.
+
+* `Download VirtualBox`_ for your system and install it.
+* `Download Vagrant`_ for you system and install it.
+
+.. _Download VirtualBox: https://www.virtualbox.org/wiki/Downloads
+.. _Download Vagrant: http://www.vagrantup.com/downloads.html
+
 **Install ansible**
 
 First step is to install ansible_.
