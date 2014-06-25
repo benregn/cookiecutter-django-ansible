@@ -154,7 +154,7 @@ and uwsgi/nginx server at `localhost:8080`_.
 
 Scattered throughout the Python and HTML of this project are places marked with "your stuff". This is where third-party libraries are to be integrated with your project.
 
-Got something you'd like to add?
+Something you'd like to add?
 ---------------------------
 
-I welcome pull requests on this, so just fork it :)
+I welcome pull requests, so just fork it :)
