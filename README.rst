@@ -96,6 +96,16 @@ Getting up and running
 
 The steps below will get you up and running with a local development environment.
 
+**Install VirtualBox and Vagrant**
+
+To get a local development machine running, you'll need VirtualBox and Vagrant.
+
+* `Download VirtualBox`_ for your system and install it.
+* `Download Vagrant`_ for you system and install it.
+
+.. _Download VirtualBox: https://www.virtualbox.org/wiki/Downloads
+.. _Download Vagrant: http://www.vagrantup.com/downloads.html
+
 **Install ansible**
 
 First step is to install ansible_.
@@ -154,27 +164,7 @@ and uwsgi/nginx server at `localhost:8080`_.
 
 Scattered throughout the Python and HTML of this project are places marked with "your stuff". This is where third-party libraries are to be integrated with your project.
 
-Releases
---------
-
-Want a stable release? You can find them at https://github.com/pydanny/cookiecutter-django/releases
-
-**note**: Cookiecutter won't support tagged releases until 0.7.0 comes out, which should be any day! Which means, if you want to use a
-tagged release of cookiecutter-django, then you have to install Cookiecutter directly from GitHub. To do that, follow these steps:
-
-1. Enter your virtualenv.
-2. Run these commands:
-
-.. code-block:: bash
-
-    (cookiecutter) $ git clone https://github.com/audreyr/cookiecutter.git
-    (cookiecutter) cd cookiecutter
-    (cookiecutter) python setup.py develop
-
-
-Not Exactly What You Want?
+Something you'd like to add?
 ---------------------------
 
-This is what I want. *It might not be what you want.*  I also accept pull requests on this,
-if they're small, atomic, and if they make my own project development experience better.
-Otherwise, just fork it :)
+I welcome pull requests, so just fork it :)
