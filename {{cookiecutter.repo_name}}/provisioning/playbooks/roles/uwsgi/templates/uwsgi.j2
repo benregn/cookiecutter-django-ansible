@@ -6,6 +6,11 @@ master = true
 env = {{ key }}={{ value }}
 {% endfor %}
 
+{% if is_production %}
+# auto reload uwsgi when developing locally
+python-autoreload = 1
+{% endif %}
+
 # maximum number of processes
 # simple rule is no. of cores on machine
 processes = {{ ansible_processor_cores }}
