@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+{% raw %}#!/usr/bin/env bash
 
 function start_runserver_plus() {
     {{ virtualenv_dir }}/bin/python manage.py runserver_plus 0.0.0.0:8000 --traceback -v 3 --threaded
@@ -18,3 +18,4 @@ function rs() {
     fi
 }
 rs
+{% endraw %}
