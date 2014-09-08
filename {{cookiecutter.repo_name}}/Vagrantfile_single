@@ -43,6 +43,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ansible.ask_sudo_pass = true
     ansible.host_key_checking = false
     # ansible.verbose = 'vvvv'
-    ansible.tags = ['deploy', 'setup']
+    # ansible.tags = ['tag_name', 'another_tag']
   end
 end

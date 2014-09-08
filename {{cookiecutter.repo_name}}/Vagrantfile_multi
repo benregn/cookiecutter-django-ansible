@@ -33,7 +33,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
         node.vm.provision "ansible" do |ansible|
           ansible.playbook = "provisioning/playbooks/bootstrap_user.yml"
-          ansible.inventory_path = "provisioning/inventory/vagrant_single"
+          ansible.inventory_path = "provisioning/inventory/vagrant_multi"
           ansible.limit = 'all'
           ansible.host_key_checking = false
           # ansible.verbose = 'vvvv'
@@ -41,7 +41,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
         node.vm.provision "ansible" do |ansible|
           ansible.playbook = "provisioning/playbooks/site.yml"
-          ansible.inventory_path = "provisioning/inventory/vagrant_single"
+          ansible.inventory_path = "provisioning/inventory/vagrant_multi"
           ansible.limit = 'all'
           ansible.ask_sudo_pass = true
           ansible.host_key_checking = false

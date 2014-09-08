@@ -28,7 +28,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 class Common(Configuration):
 
-    ########## APP CONFIGURATION
+    # APP CONFIGURATION
     DJANGO_APPS = (
         # Default Django apps:
         'django.contrib.auth',
@@ -67,9 +67,9 @@ class Common(Configuration):
         'allauth.account',  # registration
         'allauth.socialaccount',  # registration
     )
-    ########## END APP CONFIGURATION
+    # END APP CONFIGURATION
 
-    ########## MIDDLEWARE CONFIGURATION
+    # MIDDLEWARE CONFIGURATION
     MIDDLEWARE_CLASSES = (
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
@@ -78,35 +78,35 @@ class Common(Configuration):
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
     )
-    ########## END MIDDLEWARE CONFIGURATION
+    # END MIDDLEWARE CONFIGURATION
 
-    ########## DEBUG
+    # DEBUG
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
     DEBUG = values.BooleanValue(False)
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
     TEMPLATE_DEBUG = DEBUG
-    ########## END DEBUG
+    # END DEBUG
 
-    ########## SECRET CONFIGURATION
+    # SECRET CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
     # Note: This key only used for development and testing.
     #       In production, this is changed to a values.SecretValue() setting
     SECRET_KEY = "CHANGEME!!!"
-    ########## END SECRET CONFIGURATION
+    # END SECRET CONFIGURATION
 
-    ########## FIXTURE CONFIGURATION
+    # FIXTURE CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
     FIXTURE_DIRS = (
         join(BASE_DIR, 'fixtures'),
     )
-    ########## END FIXTURE CONFIGURATION
+    # END FIXTURE CONFIGURATION
 
-    ########## EMAIL CONFIGURATION
+    # EMAIL CONFIGURATION
     EMAIL_BACKEND = values.Value('django.core.mail.backends.smtp.EmailBackend')
-    ########## END EMAIL CONFIGURATION
+    # END EMAIL CONFIGURATION
 
-    ########## MANAGER CONFIGURATION
+    # MANAGER CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
     ADMINS = (
         ('{{cookiecutter.author_name}}', '{{cookiecutter.email}}'),
@@ -114,25 +114,25 @@ class Common(Configuration):
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
     MANAGERS = ADMINS
-    ########## END MANAGER CONFIGURATION
+    # END MANAGER CONFIGURATION
 
-    ########## DATABASE CONFIGURATION
+    # DATABASE CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
     DATABASES = values.DatabaseURLValue('postgres://localhost/{{cookiecutter.repo_name}}')
-    ########## END DATABASE CONFIGURATION
+    # END DATABASE CONFIGURATION
 
-    ########## CACHING
+    # CACHING
     # Do this here because thanks to django-pylibmc-sasl and pylibmc memcacheify is painful to install on windows.
     # memcacheify is what's used in Production
     CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': ''
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': ''
         }
     }
-    ########## END CACHING
+    # END CACHING
 
-    ########## GENERAL CONFIGURATION
+    # GENERAL CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#time-zone
     TIME_ZONE = 'America/Los_Angeles'
 
@@ -150,9 +150,9 @@ class Common(Configuration):
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
     USE_TZ = True
-    ########## END GENERAL CONFIGURATION
+    # END GENERAL CONFIGURATION
 
-    ########## TEMPLATE CONFIGURATION
+    # TEMPLATE CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
     TEMPLATE_CONTEXT_PROCESSORS = (
         'django.contrib.auth.context_processors.auth',
@@ -174,15 +174,15 @@ class Common(Configuration):
     )
 
     TEMPLATE_LOADERS = (
-            'django.template.loaders.filesystem.Loader',
-            'django.template.loaders.app_directories.Loader',
-        )
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    )
 
     # See: http://django-crispy-forms.readthedocs.org/en/latest/install.html#template-packs
     CRISPY_TEMPLATE_PACK = 'bootstrap3'
-    ########## END TEMPLATE CONFIGURATION
+    # END TEMPLATE CONFIGURATION
 
-    ########## STATIC FILE CONFIGURATION
+    # STATIC FILE CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
     STATIC_ROOT = join(os.path.dirname(BASE_DIR), 'staticfiles')
 
@@ -199,24 +199,24 @@ class Common(Configuration):
         'django.contrib.staticfiles.finders.FileSystemFinder',
         'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     )
-    ########## END STATIC FILE CONFIGURATION
+    # END STATIC FILE CONFIGURATION
 
-    ########## MEDIA CONFIGURATION
+    # MEDIA CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
     MEDIA_ROOT = join(BASE_DIR, 'media')
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
     MEDIA_URL = '/media/'
-    ########## END MEDIA CONFIGURATION
+    # END MEDIA CONFIGURATION
 
-    ########## URL Configuration
+    # URL Configuration
     ROOT_URLCONF = 'config.urls'
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
     WSGI_APPLICATION = 'config.wsgi.application'
-    ########## End URL Configuration
+    # End URL Configuration
 
-    ########## AUTHENTICATION CONFIGURATION
+    # AUTHENTICATION CONFIGURATION
     AUTHENTICATION_BACKENDS = (
         "django.contrib.auth.backends.ModelBackend",
         "allauth.account.auth_backends.AuthenticationBackend",
@@ -226,19 +226,20 @@ class Common(Configuration):
     ACCOUNT_AUTHENTICATION_METHOD = "username"
     ACCOUNT_EMAIL_REQUIRED = True
     ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-    ########## END AUTHENTICATION CONFIGURATION
+    # END AUTHENTICATION CONFIGURATION
 
-    ########## Custom user app defaults
+    # Custom user app defaults
     # Select the correct user model
     AUTH_USER_MODEL = "users.User"
     LOGIN_REDIRECT_URL = "users:redirect"
-    ########## END Custom user app defaults
+    LOGIN_URL = "account_login"
+    # END Custom user app defaults
 
-    ########## SLUGLIFIER
+    # SLUGLIFIER
     AUTOSLUG_SLUGIFY_FUNCTION = "slugify.slugify"
-    ########## END SLUGLIFIER
+    # END SLUGLIFIER
 
-    ########## LOGGING CONFIGURATION
+    # LOGGING CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
     # A sample logging configuration. The only tangible logging
     # performed by this configuration is to send an email to
@@ -268,10 +269,9 @@ class Common(Configuration):
             },
         }
     }
-    ########## END LOGGING CONFIGURATION
+    # END LOGGING CONFIGURATION
 
-
-    ########## CELERY CONFIGURATION
+    # CELERY CONFIGURATION
     # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-transport
     BROKER_TRANSPORT = 'amqp'
 
@@ -294,30 +294,29 @@ class Common(Configuration):
     # See: http://docs.celeryproject.org/en/latest/userguide/security.html#serializers
     # and: http://docs.celeryproject.org/en/latest/configuration.html#std:setting-CELERY_ACCEPT_CONTENT
     CELERY_ACCEPT_CONTENT = ['pickle', 'json']
-    ########## END CELERY CONFIGURATION
+    # END CELERY CONFIGURATION
 
-
-    ########## Your common stuff: Below this line define 3rd party libary settings
+    # Your common stuff: Below this line define 3rd party libary settings
 
 
 class Local(Common):
 
-    ########## DEBUG
+    # DEBUG
     DEBUG = values.BooleanValue(True)
     TEMPLATE_DEBUG = DEBUG
-    ########## END DEBUG
+    # END DEBUG
 
-    ########## INSTALLED_APPS
+    # INSTALLED_APPS
     INSTALLED_APPS = Common.INSTALLED_APPS
-    ########## END INSTALLED_APPS
+    # END INSTALLED_APPS
 
-    ########## Mail settings
+    # Mail settings
     EMAIL_HOST = "localhost"
     EMAIL_PORT = 1025
     EMAIL_BACKEND = values.Value('django.core.mail.backends.console.EmailBackend')
-    ########## End mail settings
+    # End mail settings
 
-    ########## django-debug-toolbar
+    # django-debug-toolbar
     MIDDLEWARE_CLASSES = Common.MIDDLEWARE_CLASSES + ('debug_toolbar.middleware.DebugToolbarMiddleware',)
     INSTALLED_APPS += ('debug_toolbar',)
 
@@ -331,22 +330,22 @@ class Local(Common):
         ],
         'SHOW_TEMPLATE_CONTEXT': True,
     }
-    ########## end django-debug-toolbar
+    # end django-debug-toolbar
 
-    ########## Your local stuff: Below this line define 3rd party libary settings
+    # Your local stuff: Below this line define 3rd party libary settings
 
 
 class Production(Common):
 
-    ########## INSTALLED_APPS
+    # INSTALLED_APPS
     INSTALLED_APPS = Common.INSTALLED_APPS
-    ########## END INSTALLED_APPS
+    # END INSTALLED_APPS
 
-    ########## SECRET KEY
+    # SECRET KEY
     SECRET_KEY = values.SecretValue()
-    ########## END SECRET KEY
+    # END SECRET KEY
 
-    ########## django-secure
+    # django-secure
     INSTALLED_APPS += ("djangosecure", )
 
     # set this to 60 seconds and then to 518400 when you can prove it works
@@ -358,15 +357,15 @@ class Production(Common):
     SESSION_COOKIE_SECURE = values.BooleanValue(False)
     SESSION_COOKIE_HTTPONLY = values.BooleanValue(True)
     SECURE_SSL_REDIRECT = values.BooleanValue(True)
-    ########## end django-secure
+    # end django-secure
 
-    ########## SITE CONFIGURATION
+    # SITE CONFIGURATION
     # Hosts/domain names that are valid for this site
     # See https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
     ALLOWED_HOSTS = ["*"]
-    ########## END SITE CONFIGURATION
+    # END SITE CONFIGURATION
 
-    ########## STORAGE CONFIGURATION
+    # STORAGE CONFIGURATION
     # # See: http://django-storages.readthedocs.org/en/latest/index.html
     # INSTALLED_APPS += (
     #     'storages',
@@ -395,11 +394,11 @@ class Production(Common):
 
     # # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
     # STATIC_URL = 'https://s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
-    ########## END STORAGE CONFIGURATION
+    # END STORAGE CONFIGURATION
 
-    ########## EMAIL
+    # EMAIL
     DEFAULT_FROM_EMAIL = values.Value(
-            '{{cookiecutter.project_name}} <noreply@{{cookiecutter.domain_name}}>')
+        '{{cookiecutter.project_name}} <noreply@{{cookiecutter.domain_name}}>')
     EMAIL_HOST = values.Value('smtp.sendgrid.com')
     # EMAIL_HOST_PASSWORD = values.SecretValue(environ_prefix="", environ_name="SENDGRID_PASSWORD")
     # EMAIL_HOST_USER = values.SecretValue(environ_prefix="", environ_name="SENDGRID_USERNAME")
@@ -407,9 +406,9 @@ class Production(Common):
     EMAIL_SUBJECT_PREFIX = values.Value('[{{cookiecutter.project_name}}] ', environ_name="EMAIL_SUBJECT_PREFIX")
     EMAIL_USE_TLS = True
     # SERVER_EMAIL = EMAIL_HOST_USER
-    ########## END EMAIL
+    # END EMAIL
 
-    ########## TEMPLATE CONFIGURATION
+    # TEMPLATE CONFIGURATION
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
     TEMPLATE_LOADERS = (
@@ -418,9 +417,9 @@ class Production(Common):
             'django.template.loaders.app_directories.Loader',
         )),
     )
-    ########## END TEMPLATE CONFIGURATION
+    # END TEMPLATE CONFIGURATION
 
-    ########## CACHING
+    # CACHING
     # Only do this here because thanks to django-pylibmc-sasl and pylibmc memcacheify is painful to install on windows.
     try:
         # See: https://github.com/rdegges/django-heroku-memcacheify
@@ -428,6 +427,6 @@ class Production(Common):
         CACHES = memcacheify()
     except ImportError:
         CACHES = values.CacheURLValue(default="memcached://127.0.0.1:11211")
-    ########## END CACHING
+    # END CACHING
 
-    ########## Your production stuff: Below this line define 3rd party libary settings
+    # Your production stuff: Below this line define 3rd party libary settings
