@@ -15,4 +15,3 @@ python_dependencies:
 python_pip_global_packages:
     - { name: virtualenv, version: 1.11.6 }
     - { name: virtualenvwrapper, version: 4.3 }
-    - { name: uwsgi, version: 2.0.5.1 }
