@@ -21,5 +21,5 @@ virtualenv_dir: /home/{{django_user}}/.virtualenvs/{{project_name}}
 reqs_dir: "{{ code_root_dir }}/requirements"
 {% endraw %}
 # dotted path to your wsgi.py, relative to code_root_dir
-wsgi_path: config.wsgi
-settings_module: config.settings
+wsgi_path: wsgi
+settings_module: config
