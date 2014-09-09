@@ -1,5 +1,5 @@
 {% raw %}[program:{{project_name}}]
-command=/usr/local/bin/uwsgi --ini /etc/uwsgi/vassals/{{project_name}}.ini
+command={{ virtualenv_dir }}/bin/uwsgi --ini /etc/uwsgi/vassals/{{project_name}}.ini
 autostart=true
 autorestart=true
 stdout_logfile=/var/log/supervisor/{{project_name}}_uwsgi_stdout.log
