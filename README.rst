@@ -1,6 +1,10 @@
 cookiecutter-django-ansible
 =======================
 
+.. image:: https://requires.io/github/benregn/cookiecutter-django-ansible/requirements.png?branch=master
+     :target: https://requires.io/github/benregn/cookiecutter-django-ansible/requirements/?branch=master
+     :alt: Requirements Status
+
 A cookiecutter_ template for Django. Based on pydanny's `cookiecutter-django`_.
 
 .. _cookiecutter: https://github.com/audreyr/cookiecutter
