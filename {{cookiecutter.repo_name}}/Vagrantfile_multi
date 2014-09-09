@@ -18,6 +18,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # Using Vagrant Cloud
       # https://vagrantcloud.com/ubuntu/trusty64
       node.vm.box = "ubuntu/trusty64"
+      if Vagrant.has_plugin?("vagrant-cachier")
+        config.cache.scope = :box
+      end
       node.vm.host_name = server_name.to_s
       node.vm.network "private_network", ip: ip
 

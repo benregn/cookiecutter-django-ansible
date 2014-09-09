@@ -11,6 +11,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Using Vagrant Cloud
   # https://vagrantcloud.com/ubuntu/trusty64
   config.vm.box = "ubuntu/trusty64"
+  if Vagrant.has_plugin?("vagrant-cachier")
+    config.cache.scope = :box
+  end
   config.vm.hostname = "web"
 
   # config.ssh.forward_agent = true
