@@ -9,9 +9,9 @@ run syncdb & migrate
 
 ansible - need to make log dir & make sure it has correct permissions
 
-dj runserver 0.0.0.0:port --settings=config
+dj runserver 0.0.0.0:port --settings=config.settings
 OR
-export DJANGO_SETTINGS_MODULE=config
+export DJANGO_SETTINGS_MODULE=config.settings
 
 remember to include the "/" in rabbitmq url if the vhost name is "/project_name", e.g. amqp://django:changeme@localhost:5672//project_name
 note the two "/" before project_name
