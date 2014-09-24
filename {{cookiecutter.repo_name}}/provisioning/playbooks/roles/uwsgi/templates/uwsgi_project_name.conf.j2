@@ -4,5 +4,5 @@ autostart=true
 autorestart=true
 stdout_logfile=/var/log/supervisor/{{project_name}}_uwsgi_stdout.log
 stderr_logfile=/var/log/supervisor/{{project_name}}_uwsgi_stderr.log
-stopwaitsecs=26
-stopsignal=INT{% endraw %}
+stopwaitsecs=60
+stopsignal=HUP{% endraw %}
