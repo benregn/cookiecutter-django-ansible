@@ -71,6 +71,7 @@ class Common(Configuration):
 
     # MIDDLEWARE CONFIGURATION
     MIDDLEWARE_CLASSES = (
+        'djangosecure.middleware.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
         'django.middleware.csrf.CsrfViewMiddleware',
@@ -346,7 +347,7 @@ class Production(Common):
     # END SECRET KEY
 
     # django-secure
-    INSTALLED_APPS += ("djangosecure", )
+    INSTALLED_APPS += ("djangosecure",)
 
     # set this to 60 seconds and then to 518400 when you can prove it works
     SECURE_HSTS_SECONDS = 60
