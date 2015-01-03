@@ -31,6 +31,16 @@
   tags:
     - deploy
 
+- name: "create /var/log/{{project_name}} directory"
+  file: >
+    path=/var/log/{{project_name}}
+    owner={{django_user}}
+    group=www-data
+    state=directory
+    mode=775
+  tags:
+    - setup
+
 - name: ensure correct permissions on code_root_dir dir
   file: >
     path={{ code_root_dir }}
@@ -75,18 +85,6 @@
     - deploy
   environment: env_vars
 
-- name: "restart supervisor managed processes"
-  supervisorctl: >
-    name={{ item }}
-    state=restarted
-  with_items:
-    - "{{ project_name }}"
-    - celerybeat
-    - celeryd
-  sudo: True
-  tags:
-    - deploy
-
 - name: copy custom runserver_plus script
   template: >
     src=rs.j2
@@ -104,6 +102,24 @@
     src=runserver_plus.conf.j2
     dest=/etc/supervisor/runserver_plus.conf
   when: not is_production
+  sudo: True
+  tags:
+    - deploy
+
+- name: make sure supervisord is aware of all conf files
+  command: supervisorctl update
+  sudo: True
+  tags:
+    - deploy
+
+- name: "restart supervisor managed processes"
+  supervisorctl: >
+    name={{ item }}
+    state=restarted
+  with_items:
+    - "{{ project_name }}"
+    - celerybeat
+    - celeryd
   sudo: True
   tags:
     - deploy

@@ -58,11 +58,32 @@
   tags:
     - postgres
 
+- name: update postgres pg_hba.conf
+  template: >
+    src=pg_hba.conf
+    dest=/etc/postgresql/9.3/main/pg_hba.conf
+  sudo: True
+  register: pg_hba
+  tags:
+    - postgres
+
 - name: ensure postgres is restarted
   service: >
     name=postgresql
     state=restarted
   sudo: True
+  when: pg_hba.changed
+  tags:
+    - postgres
+
+- name: ensure /usr/share/postgresql/9.3/user exists
+  file: >
+    path=/usr/share/postgresql/9.3/user
+    state=directory
+  sudo: True
+  tags:
+    - postgres
+
 
 - name: create a postgres user
   postgresql_user: >

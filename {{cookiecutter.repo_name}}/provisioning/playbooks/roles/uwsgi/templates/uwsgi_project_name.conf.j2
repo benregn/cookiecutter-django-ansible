@@ -2,7 +2,9 @@
 command={{ virtualenv_dir }}/bin/uwsgi --ini /etc/uwsgi/vassals/{{project_name}}.ini
 autostart=true
 autorestart=true
-stdout_logfile=/var/log/supervisor/{{project_name}}_uwsgi_stdout.log
-stderr_logfile=/var/log/supervisor/{{project_name}}_uwsgi_stderr.log
+redirect_stderr=true
+stdout_logfile=/var/log/supervisor/uwsgi.log
 stopwaitsecs=60
-stopsignal=HUP{% endraw %}
+stopsignal=HUP
+user={{ django_user }}
+group=www-data{% endraw %}
