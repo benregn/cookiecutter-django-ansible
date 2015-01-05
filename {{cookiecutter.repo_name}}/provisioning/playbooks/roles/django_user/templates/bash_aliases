@@ -3,7 +3,6 @@ export WORKON_HOME=$HOME/.virtualenvs
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
 export PIP_VIRTUALENV_BASE=$WORKON_HOME
 export PIP_RESPECT_VIRTUALENV=true
-export DATABASE_URL="postgres://{{ lookup('env', 'PSQL_USER') }}:{{ lookup('env', 'PSQL_PASSWORD') }}@localhost:5432/{{ lookup('env', 'PSQL_DB_NAME') }}"
 if [[ -r /usr/local/bin/virtualenvwrapper.sh ]]; then
     source /usr/local/bin/virtualenvwrapper.sh
 else
