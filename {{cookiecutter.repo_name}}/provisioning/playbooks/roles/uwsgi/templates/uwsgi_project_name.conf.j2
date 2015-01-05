@@ -4,7 +4,8 @@ autostart=true
 autorestart=true
 redirect_stderr=true
 stdout_logfile=/var/log/supervisor/uwsgi.log
-stopwaitsecs=60
+stopwaitsecs={% if is_production %}60{% else %}0{% endif %}
+
 stopsignal=HUP
 user={{ django_user }}
 group=www-data{% endraw %}
