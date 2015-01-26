@@ -34,8 +34,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         node.vm.network :forwarded_port, guest: 8000, host: 8000, id: "django"
         node.vm.network :forwarded_port, guest: 15672, host: 15672, id: "rabbitmq-management"
 
-        node.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
-        node.vm.synced_folder ".", "/var/www/django/", id: "django-root", group: "www-data", disabled: false, :mount_options => ["uid=1002"]
+        node.vm.synced_folder(
+          ".",
+          "/vagrant",
+          id: "vagrant-root",
+          disabled: true
+        )
+        node.vm.synced_folder(
+          ".",
+          "/var/www/django/",
+          id: "django-root",
+          group: "www-data",
+          disabled: false,
+          :mount_options => ["uid=1002"]
+        )
 
         node.vm.provision "ansible" do |ansible|
           ansible.playbook = "provisioning/playbooks/bootstrap_user.yml"
