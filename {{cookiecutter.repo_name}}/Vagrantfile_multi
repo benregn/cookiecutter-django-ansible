@@ -63,6 +63,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           ansible.limit = 'all'
           ansible.ask_sudo_pass = true
           ansible.host_key_checking = false
+          ansible.raw_ssh_args = ['-o IdentityFile={{cookiecutter.private_ssh_key_path}}']
           # ansible.verbose = 'vvvv'
           # ansible.tags = ['tag_name', 'another_tag']
         end
